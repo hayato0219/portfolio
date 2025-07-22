@@ -35,7 +35,6 @@ const Footer = (props) => {
     linkedIn,
     medium,
     name,
-    primaryColor,
     twitter,
     youTube,
   } = props;
@@ -49,10 +48,11 @@ const Footer = (props) => {
         alignItems: "center",
         gap: "2.5rem",
         padding: "5rem 0 3rem",
-        backgroundColor: primaryColor,
-        width: "100vw"
+        backgroundColor: "#1E1E1E",
+        color: "white",
       }}
     >
+      <h2>Contact</h2>
       <div
         style={{
           display: "flex",
@@ -113,7 +113,7 @@ const Footer = (props) => {
           </a>
         )}
       </div>
-      <p className="small" style={{ marginTop: 0, color: "white" }}>
+      <p className="small" style={{ marginTop: 0 }}>
         Created by {name}
       </p>
     </div>

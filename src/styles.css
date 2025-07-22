@@ -105,8 +105,10 @@ a:hover {
 .container {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: 330px 300px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   margin: 20px auto;
+  max-width: 1200px;
+  padding: 0 2rem;
 }
 
 .container .box {
@@ -122,4 +124,14 @@ a:hover {
 img.socialIcon {
   height: 30px;
   width: 30px;
+}
+
+.btn {
+  background-color: #4e567e;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
 }
