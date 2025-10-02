@@ -1,46 +1,254 @@
-import React from 'react';
+import React, { useState } from 'react';
+import designDeskImage from '../images/design-desk.jpeg';
+import womanWithTabletImage from '../images/woman-with-tablet.jpg';
+import currentResearchImage from '../images/currentResearch.png';
+import internshipICONImage from '../images/internshipICON.jpg';
+import nakamozuAppImage from '../images/nakamozuApp.png';
+import pastResearchxImage from '../images/pastResearch.jpeg';
 
-const ServiceIcon = ({ name }) => {
-  const style = { marginRight: '0.5rem', width: '16px', height: '16px' };
-  const icons = {
-    "Website Designing": <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-4zm-4 14H8v-2h8v2zm-8-4H8v-2h4v2zm0-4H8V8h4v2zm6 4h-4v-2h4v2zm0-4h-4V8h4v2zm4 4h-2v-2h2v2zm0-4h-2V8h2v2z" fill="#4F4F4F" />,
-    "Copywriting": <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.11 4.65 1 5c0 0 .09.01.24.03.21.03.44.07.69.13.25.06.5.13.75.2.75.25 1.5.5 2.25.5.75 0 1.5-.25 2.25-.5.25-.07.5-.14.75-.2.25-.06.48-.1.69-.13C11.91 5.01 12 5 12 5s.09.01.24.03c.21.03.44.07.69.13.25.06.5.13.75.2.75.25 1.5.5 2.25.5.75 0 1.5-.25 2.25-.5.25-.07.5-.14.75-.2.25-.06.48-.1.69-.13.15-.02.24-.03.24-.03zM1 9c.24-.02.48-.05.73-.09.25-.04.5-.08.75-.13.75-.15 1.5-.25 2.25-.25s1.5.1 2.25.25c.25.05.5.09.75.13.25.04.49.07.73.09.15.01.24.01.24.01s.09,0,.24-.01c.24-.02.48-.05.73-.09.25-.04.5-.08.75-.13.75-.15 1.5-.25 2.25-.25s1.5.1 2.25.25c.25.05.5.09.75.13.25.04.49.07.73.09.15.01.24.01.24.01v10c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.11 19.65 1 20V9z" fill="#4F4F4F" />,
+const Services = ({ services, t }) => {
+  // 画像のマッピング
+  const imageMap = {
+    'design-desk.jpeg': designDeskImage,
+    'woman-with-tablet.jpg': womanWithTabletImage,
+    'currentResearch.png': currentResearchImage,
+    'internshipICON.jpg': internshipICONImage,
+    'nakamozuApp.png': nakamozuAppImage,
+    'pastResearch.jpeg': pastResearchxImage,
   };
-  return <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={style}>{icons[name] || <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#4F4F4F" />}</svg>;
-};
 
-const Services = ({ services }) => {
-  const itemStyle = {
-    border: '1px solid #ddd',
-    borderRadius: '8px',
-    padding: '12px 16px',
-    backgroundColor: '#fff',
-    textAlign: 'left',
-    width: '100%',
+  // 最初の2つの年（2025と2024）を初期状態で開いておく
+  const [expandedYears, setExpandedYears] = useState({
+    '2025': true,
+    '2024': true
+  });
+
+  // モーダル用のstate
+  const [modalImage, setModalImage] = useState(null);
+
+  const toggleYear = (year) => {
+    setExpandedYears(prev => ({
+      ...prev,
+      [year]: !prev[year]
+    }));
+  };
+
+  // 画像クリック時にモーダルを開く
+  const openModal = (imageSrc) => {
+    setModalImage(imageSrc);
+  };
+
+  // モーダルを閉じる
+  const closeModal = () => {
+    setModalImage(null);
+  };
+
+  // ★★★ 修正後のスタイル定義 ★★★
+  const yearHeaderStyle = {
+    // 従来の四角い囲いのスタイルを削除・変更
+    // border: '1px solid #ddd',    // 削除
+    // borderRadius: '8px',         // 削除
+    // backgroundColor: '#f8f9fa',  // 削除し、透明に
+    backgroundColor: 'transparent', 
+
+    padding: '16px 20px', // パディングは維持（必要に応じて調整してください）
+    cursor: 'pointer',
     display: 'flex',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    color: '#333',
-    textDecoration: 'none',
-    fontSize: '0.9rem',
-    fontWeight: '500',
-    boxSizing: 'border-box',
+    transition: 'all 0.3s ease',
+    marginBottom: '0.5rem',
+    
+    // ★★★ 下線を追加 ★★★
+    borderBottom: '2px solid #333', // 2pxの太さで濃いグレーの下線
   };
-  const gridStyle = { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' };
+
+  const yearHeaderHoverStyle = {
+    // ホバー時の背景色を削除し、下線の色変更用に定義
+    // backgroundColor: '#e9ecef', // 削除
+    borderBottomColor: '#44f9ccff', // 例: ホバー時は青色にする
+  };
+  // ★★★ スタイル定義ここまで ★★★
+
+  const itemStyle = {
+    border: '1px solid #e0e0e0',
+    borderRadius: '6px',
+    padding: '16px',
+    backgroundColor: '#fff',
+    marginBottom: '0.75rem',
+    marginLeft: '1rem',
+    display: 'flex',
+    gap: '2rem',
+    alignItems: 'center',
+  };
+
+  const imageStyle = {
+    width: '150px',
+    height: '120px',
+    borderRadius: '10%',
+    objectFit: 'cover',
+    flexShrink: 0,
+    cursor: 'pointer',
+    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+  };
+
+  const contentStyle = {
+    flex: 1,
+  };
+
+  const itemTitleStyle = {
+    fontSize: '1.1rem',
+    fontWeight: '600',
+    color: '#222',
+    marginBottom: '0.5rem',
+  };
+
+  const itemTextStyle = {
+    fontSize: '0.9rem',
+    color: '#555',
+    marginBottom: '0.25rem',
+    lineHeight: '1.6',
+    whiteSpace: "pre-line",
+  };
+
+  const arrowStyle = (isExpanded) => ({
+    fontSize: '1.2rem',
+    transition: 'transform 0.3s ease',
+    transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+  });
+
+  const detailsContainerStyle = (isExpanded) => ({
+    maxHeight: isExpanded ? '1000px' : '0',
+    overflow: 'hidden',
+    transition: 'max-height 0.3s ease',
+  });
 
   return (
     <div>
-      <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', fontWeight: '600', color: '#222' }}>My Services</h2>
-      <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem', color: '#444', fontWeight: '500' }}>Checkout services offered by me</h3>
-      <div style={{ ...gridStyle, gridTemplateColumns: '1fr 1fr' }}>
-        {services.map((service) => (
-          <div key={service} style={itemStyle}>
-            <ServiceIcon name={service} />
-            {service}
-          </div>
-        ))}
+      <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', fontWeight: '600', color: '#222' }}>{t.experience}</h2>
+      <div>
+        {services.map((yearData) => {
+          const isExpanded = expandedYears[yearData.year];
+          return (
+            <div key={yearData.year} style={{ marginBottom: '1rem' }}>
+              <div 
+                style={yearHeaderStyle}
+                onClick={() => toggleYear(yearData.year)}
+                
+                // ★★★ ホバー処理を修正 ★★★
+                onMouseEnter={(e) => {
+                  // ホバー時に下線の色を変更
+                  e.currentTarget.style.borderBottomColor = yearHeaderHoverStyle.borderBottomColor;
+                }}
+                onMouseLeave={(e) => {
+                  // マウスアウトで下線の色を元に戻す
+                  e.currentTarget.style.borderBottomColor = '#333';
+                }}
+                // ★★★ ホバー処理ここまで ★★★
+              >
+                <span style={{ fontSize: '1.3rem', fontWeight: '700', color: '#333' }}>
+                  {yearData.year}
+                </span>
+                <span style={arrowStyle(isExpanded)}>▼</span>
+              </div>
+              <div style={detailsContainerStyle(isExpanded)}>
+                {yearData.items.map((item, index) => (
+                  <div key={index} style={itemStyle}>
+                    {item.image && imageMap[item.image] && (
+                      <img 
+                        src={imageMap[item.image]} 
+                        alt={item.title}
+                        style={imageStyle}
+                        onClick={() => openModal(imageMap[item.image])}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                          e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                      />
+                    )}
+                    <div style={contentStyle}>
+                      <div style={itemTitleStyle}>{item.title}</div>
+                      {item.description && <div style={itemTextStyle}>{item.description}</div>}
+                      {item.date && <div style={itemTextStyle}>{item.date}</div>}
+                      {item.technologies && <div style={itemTextStyle}>{item.technologies}</div>}
+                      {item.tags && <div style={itemTextStyle}>{item.tags}</div>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
+
+      {/* モーダル */}
+      {modalImage && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000,
+            cursor: 'pointer',
+          }}
+          onClick={closeModal}
+        >
+          <div style={{ position: 'relative', maxWidth: '90%', maxHeight: '90%' }}>
+            <img 
+              src={modalImage} 
+              alt="Expanded view"
+              style={{
+                maxWidth: '100%',
+                maxHeight: '90vh',
+                objectFit: 'contain',
+                borderRadius: '8px',
+              }}
+            />
+            <button
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '0',
+                background: 'white',
+                border: 'none',
+                borderRadius: '50%',
+                width: '35px',
+                height: '35px',
+                fontSize: '1.5rem',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                color: '#333',
+              }}
+              onClick={closeModal}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+
+      <style jsx="true">{`
+        @media (max-width: 768px) {
+          h2 {
+            font-size: 1.3rem !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
 export default Services;
+// export default

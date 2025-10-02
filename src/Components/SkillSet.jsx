@@ -8,7 +8,7 @@ const ServiceIcon = ({ name }) => {
   return <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style={style}>{icons[name] || icons['default']}</svg>;
 };
 
-const SkillSet = ({ skills }) => {
+const SkillSet = ({ skills, t }) => {
   const itemStyle = {
     border: '1px solid #ddd',
     borderRadius: '8px',
@@ -27,7 +27,7 @@ const SkillSet = ({ skills }) => {
 
   return (
     <div>
-      <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', fontWeight: '600', color: '#222' }}>Skill Set</h2>
+      <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', fontWeight: '600', color: '#222' }}>{t.skillSet}</h2>
       {skills.map((skill) => (
         <div key={skill} style={{ ...itemStyle, marginBottom: '0.5rem', gridColumn: '1 / -1' }}>
           <ServiceIcon name="default" />
