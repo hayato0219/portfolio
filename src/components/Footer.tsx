@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Translations } from '@/types';
 
 interface FooterProps {
@@ -14,6 +14,19 @@ const envelopeIcon = '/images/socials/envelope.svg';
 const gitHubIcon = '/images/socials/github.svg';
 
 const Footer: React.FC<FooterProps> = ({ name, email, gitHub, t }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  
+  useEffect(() => {
+    // クライアントサイドでのみwindowにアクセス
+    setIsMobile(window.innerWidth <= 768);
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
     <div
       id="footer"
@@ -22,7 +35,7 @@ const Footer: React.FC<FooterProps> = ({ name, email, gitHub, t }) => {
         flexDirection: "column",
         alignItems: "center",
         gap: "2rem",
-        padding: "1rem 0 2rem",
+        padding: "1rem 0 0",
         backgroundColor: "#1E1E1E",
         color: "white",
       }}
@@ -47,7 +60,7 @@ const Footer: React.FC<FooterProps> = ({ name, email, gitHub, t }) => {
           </a>
         )}
       </div>
-      <p className="small" style={{ marginTop: 0 }}>
+      <p className="small" style={{ margin: 0, paddingBottom: "1rem" }}>
         {t.createdBy} {t.creatorName}
       </p>
     </div>
