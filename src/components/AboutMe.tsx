@@ -9,7 +9,7 @@ interface AboutMeProps {
 }
 
 const AboutMe: React.FC<AboutMeProps> = ({ about, t }) => {
-  const pStyle = { color: '#555', lineHeight: '1.7', fontSize: '1rem' };
+  const pStyle = { color: '#555', lineHeight: '1.7', fontSize: '1.2rem' };
 
   return (
     <div id="about" style={{ scrollMarginTop: '80px' }}>

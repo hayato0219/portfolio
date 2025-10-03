@@ -85,7 +85,9 @@ const Home: React.FC<HomeProps> = ({ siteProps, t }) => {
         </div>
         <div style={rightColumnStyle}>
           <AboutMe about={t.aboutDescription} t={t} />
-          <Services services={t.experienceList} t={t} />
+          <div style={{ marginTop: '2rem' }}>
+            <Services services={t.experienceList} t={t} />
+          </div>
         </div>
       </div>
     </section>

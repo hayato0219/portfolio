@@ -42,8 +42,8 @@ const Services: React.FC<ServicesProps> = ({ services, t }) => {
 
   // 最初の2つの年（2025と2024）を初期状態で開いておく
   const [expandedYears, setExpandedYears] = useState<{ [key: string]: boolean }>({
-    '2025': true,
-    '2024': true,
+    '2025': false,
+    '2024': false,
   });
 
   // モーダル用のstate

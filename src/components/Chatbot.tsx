@@ -67,7 +67,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
     });
     
     // 連絡先
-    context += `\nContact: Email: ${siteProps.email}, GitHub: github.com/${siteProps.gitHub}\n`;
+    context += `\nContact: Email: ${siteProps.socials.email}, GitHub: github.com/${siteProps.socials.gitHub}\n`;
     
     return context;
   };

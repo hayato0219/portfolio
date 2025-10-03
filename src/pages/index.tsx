@@ -11,9 +11,8 @@ import type { SiteProps } from '@/types';
 const siteProps: SiteProps = {
   name: "Hayato Seki",
   title: "Graduate Student Portfolio",
-  email: "sekihayato0219@icloud.com",
-  gitHub: "hayato0219",
   socials: {
+    email: "0219ha8ya8to10@gmail.com",
     gitHub: "hayato0219",
   },
 };
@@ -31,7 +30,7 @@ export default function Index() {
     <div id="main">
       <Header t={t} language={language} changeLanguage={changeLanguage} />
       <Home siteProps={siteProps} t={t} />
-      <Footer email={siteProps.email} {...siteProps.socials} name={siteProps.name} t={t} />
+      <Footer {...siteProps.socials} name={siteProps.name} t={t} />
       <Chatbot t={t} siteProps={siteProps} />
     </div>
   );

@@ -1,9 +1,8 @@
 export interface SiteProps {
   name: string;
   title: string;
-  email: string;
-  gitHub: string;
   socials: {
+    email: string;
     gitHub: string;
   };
 }
