@@ -2,16 +2,14 @@
   "root": true,
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:react/recommended"
   ],
-  "plugins": ["react", "prettier", "jsx-a11y"],
+  "plugins": ["react"],
   "parserOptions": {
-    "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
-    "sourceType": "module", // Allows for the use of imports
+    "ecmaVersion": 2020,
+    "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true // Allows for the parsing of JSX
+      "jsx": true
     }
   },
   "env": {
@@ -25,7 +23,6 @@
     }
   },
   "rules": {
-    "prettier/prettier": ["warn", { "endOfLine": "auto" }],
     "react/prop-types": "warn"
   }
 }
