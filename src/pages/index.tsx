@@ -27,7 +27,7 @@ export default function Index() {
   const t = translations[language];
 
   return (
-    <div id="main">
+    <div id="main" style={{ transform: "scale(0.9)", transformOrigin: "top center", width: "111.11%", marginLeft: "-5.56%" }}>
       <Header t={t} language={language} changeLanguage={changeLanguage} />
       <Home siteProps={siteProps} t={t} />
       <Footer {...siteProps.socials} name={siteProps.name} t={t} />

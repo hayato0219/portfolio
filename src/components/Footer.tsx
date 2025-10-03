@@ -21,8 +21,8 @@ const Footer: React.FC<FooterProps> = ({ name, email, gitHub, t }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "2.5rem",
-        padding: "5rem 0 3rem",
+        gap: "2rem",
+        padding: "1rem 0 2rem",
         backgroundColor: "#1E1E1E",
         color: "white",
       }}
@@ -37,15 +37,13 @@ const Footer: React.FC<FooterProps> = ({ name, email, gitHub, t }) => {
         }}
       >
         {email && (
-          <a href={`mailto:${email}`} style={{ color: "white", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <img src={envelopeIcon} alt="email" className="socialIcon" />
-            <p>{t.email}</p>
+          <a href={`mailto:${email}`} style={{ color: "white", textDecoration: "none", display: "flex", alignItems: "center" }} title={t.email}>
+            <img src={envelopeIcon} alt={t.email} style={{ width: "3rem", height: "3rem" }} />
           </a>
         )}
         {gitHub && (
-          <a href={`https://github.com/${gitHub}`} target="_blank" rel="noopener noreferrer" style={{ color: "white", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <img src={gitHubIcon} alt="GitHub" className="socialIcon" />
-            <p>{t.github}</p>
+          <a href={`https://github.com/${gitHub}`} target="_blank" rel="noopener noreferrer" style={{ color: "white", textDecoration: "none", display: "flex", alignItems: "center" }} title={t.github}>
+            <img src={gitHubIcon} alt={t.github} style={{ width: "3rem", height: "3rem" }} />
           </a>
         )}
       </div>
