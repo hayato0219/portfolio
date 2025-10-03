@@ -24,8 +24,9 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
+  
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -41,6 +42,17 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
       ]);
     }
   }, [isOpen, t.chatbotWelcome, messages.length]);
+
+  useEffect(() => {
+    // クライアントサイドでのみwindowにアクセス
+    setIsMobile(window.innerWidth <= 768);
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // サイト情報をまとめたコンテキストを生成
   const getSiteContext = () => {
@@ -177,10 +189,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
           onClick={() => setIsOpen(true)}
           style={{
             position: 'fixed',
-            bottom: '20px',
-            right: '20px',
-            width: '60px',
-            height: '60px',
+            bottom: isMobile ? '15px' : '20px',
+            right: isMobile ? '15px' : '20px',
+            width: isMobile ? '50px' : '60px',
+            height: isMobile ? '50px' : '60px',
             borderRadius: '50%',
             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
             border: 'none',
@@ -189,7 +201,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            fontSize: '1.5rem',
+            fontSize: isMobile ? '1.3rem' : '1.5rem',
             color: 'white',
             zIndex: 999,
             transition: 'transform 0.3s ease',
@@ -206,12 +218,15 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
         <div
           style={{
             position: 'fixed',
-            bottom: '20px',
-            right: '20px',
-            width: '380px',
-            height: '700px',
+            bottom: isMobile ? '0' : '20px',
+            right: isMobile ? '0' : '20px',
+            left: isMobile ? '0' : 'auto',
+            top: isMobile ? '0' : 'auto',
+            width: isMobile ? '100%' : '380px',
+            height: isMobile ? '100%' : '700px',
+            maxHeight: isMobile ? '100vh' : '700px',
             background: 'white',
-            borderRadius: '12px',
+            borderRadius: isMobile ? '0' : '12px',
             boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
             display: 'flex',
             flexDirection: 'column',
@@ -224,24 +239,24 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
             style={{
               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
               color: 'white',
-              padding: '16px',
+              padding: isMobile ? '12px 16px' : '16px',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
             }}
           >
-            <h3 style={{ margin: 0, fontSize: '1.1rem' }}>{t.chatbotTitle}</h3>
+            <h3 style={{ margin: 0, fontSize: isMobile ? '1rem' : '1.1rem' }}>{t.chatbotTitle}</h3>
             <button
               onClick={() => setIsOpen(false)}
               style={{
                 background: 'transparent',
                 border: 'none',
                 color: 'white',
-                fontSize: '1.5rem',
+                fontSize: isMobile ? '1.8rem' : '1.5rem',
                 cursor: 'pointer',
                 padding: '0',
-                width: '30px',
-                height: '30px',
+                width: isMobile ? '35px' : '30px',
+                height: isMobile ? '35px' : '30px',
               }}
             >
               ×
@@ -253,7 +268,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
             style={{
               flex: 1,
               overflowY: 'auto',
-              padding: '16px',
+              padding: isMobile ? '12px' : '16px',
               background: '#f5f5f5',
             }}
           >
@@ -493,7 +508,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
           {/* 入力エリア */}
           <div
             style={{
-              padding: '16px',
+              padding: isMobile ? '12px' : '16px',
               borderTop: '1px solid #e0e0e0',
               background: 'white',
               display: 'flex',
@@ -508,11 +523,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
               placeholder={t.chatbotPlaceholder}
               style={{
                 flex: 1,
-                padding: '10px 14px',
+                padding: isMobile ? '8px 12px' : '10px 14px',
                 border: '1px solid #ddd',
                 borderRadius: '20px',
                 outline: 'none',
-                fontSize: '0.9rem',
+                fontSize: isMobile ? '0.85rem' : '0.9rem',
               }}
             />
             <button
@@ -522,10 +537,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
                 color: 'white',
                 border: 'none',
                 borderRadius: '50%',
-                width: '40px',
-                height: '40px',
+                width: isMobile ? '36px' : '40px',
+                height: isMobile ? '36px' : '40px',
                 cursor: 'pointer',
-                fontSize: '1.2rem',
+                fontSize: isMobile ? '1.1rem' : '1.2rem',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
