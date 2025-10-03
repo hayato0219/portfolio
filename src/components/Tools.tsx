@@ -9,7 +9,7 @@ const ServiceIcon = ({ name }) => {
 };
 
 const Tools = ({ tools, t }) => {
-  const itemStyle = {
+  const itemStyle: React.CSSProperties = {
     border: '1px solid #ddd',
     borderRadius: '8px',
     padding: '12px 16px',
