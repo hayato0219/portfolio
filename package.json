@@ -1,42 +1,33 @@
 {
-  "name": "educator-js-codespace-template",
+  "name": "hayato-portfolio",
   "version": "1.0.0",
-  "description": "Hayato Seki's personal portfolio.",
-  "source": "src/index.html",
-  "homepage": "https://github.com/microsoft/codespaces-teaching-template-js#readme",
+  "description": "Hayato Seki's personal portfolio built with Next.js and TypeScript",
+  "private": true,
   "scripts": {
-    "start": "parcel",
-    "dev": "parcel",
-    "build": "parcel build",
-    "build-gh": "parcel build --public-url 'https://{github-username}.github.io/{repo-name}'",
-    "predeploy": "npm run build-gh",
-    "deploy": "gh-pages -d dist"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microsoft/codespaces-teaching-template-js.git"
+    "url": "git+https://github.com/hayato0219/portfolio.git"
   },
   "author": "Hayato Seki",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/microsoft/codespaces-teaching-template-js/issues"
-  },
   "dependencies": {
+    "next": "^14.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-tsparticles": "^2.12.2",
-    "tsparticles": "^3.8.1"
+    "markdown-to-jsx": "^7.4.0"
   },
   "devDependencies": {
-    "eslint": "^8.23.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.7",
-    "gh-pages": "^5.0.0",
-    "html-webpack-plugin": "^5.5.0",
-    "parcel": "^2.7.0",
-    "prettier": "^2.7.1",
-    "process": "^0.11.10"
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0"
   }
 }

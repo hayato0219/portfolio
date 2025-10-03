@@ -409,6 +409,26 @@ Explore how you can use Copilot to help you:
 
 <br />
 
+## 🤖 AI Chatbot Feature
+
+This portfolio includes an AI-powered chatbot that can answer questions about the portfolio owner's skills, experience, and projects using Google's Gemini API.
+
+### Setting up the Chatbot
+
+1. Get a free Gemini API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Create a `.env` file in the root directory of the project
+3. Add your API key to the `.env` file:
+   ```
+   REACT_APP_GEMINI_API_KEY=your_api_key_here
+   ```
+4. Restart your development server
+
+The chatbot will appear as a purple chat button in the bottom-right corner of the page. It can answer questions in both English and Japanese based on the site content.
+
+**Note:** Make sure to add `.env` to your `.gitignore` file to keep your API key secure.
+
+<br />
+
 ## 📚 Resources
 
 * [GitHub Codespaces docs overview](https://docs.github.com/codespaces/overview)

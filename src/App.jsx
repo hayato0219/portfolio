@@ -8,6 +8,7 @@ import React, { useState } from "react";
 
 import Header from "./Components/Header";
 import Home from "./Components/Home";
+import Chatbot from "./Components/Chatbot";
 
 import Footer from "./Components/Footer";
 import { translations } from "./translations";
@@ -48,6 +49,7 @@ const App = () => {
       <Home siteProps={siteProps} t={t} />
       
       <Footer email={siteProps.email} {...siteProps.socials} name={siteProps.name} t={t} />
+      <Chatbot t={t} siteProps={siteProps} />
     </div>
   );
 };
