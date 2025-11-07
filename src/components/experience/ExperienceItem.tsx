@@ -10,7 +10,7 @@ interface ExperienceItemProps {
     description: string;
     date?: string;
     images?: string[];
-    technologies?: string;
+    technologies?: string[];
     tags?: string;
   };
   itemKey: string;
@@ -276,13 +276,13 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
         {item.date && <div style={itemDateStyle}>{item.date}</div>}
         {item.description && <div style={itemDescriptionStyle}>{item.description}</div>}
 
-        {item.technologies && (
+        {item.technologies && item.technologies.length > 0 && (
           <div>
             <div style={technologiesLabelStyle}>
               <span>{t.technologiesLabel}</span>
             </div>
             <div style={itemTechnologiesStyle}>
-              {item.technologies.split(',').map((tech, index) => (
+              {item.technologies.map((tech, index) => (
                 <span key={index} style={{
                   display: 'inline-block',
                   margin: '4px 6px 4px 0',

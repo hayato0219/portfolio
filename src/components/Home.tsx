@@ -5,7 +5,7 @@ import Image from 'next/image';
 import type { SiteProps, Translations } from '@/types';
 import SkillSet from './SkillSet';
 import AboutMe from './AboutMe';
-import Services from './Services';
+import { Services } from './experience';
 import Tools from './Tools';
 
 const imageAltText = 'Hayato Seki';

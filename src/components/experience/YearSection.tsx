@@ -9,7 +9,7 @@ interface ExperienceItemType {
   description: string;
   date?: string;
   images?: string[];
-  technologies?: string;
+  technologies?: string[];
   tags?: string;
 }
 
