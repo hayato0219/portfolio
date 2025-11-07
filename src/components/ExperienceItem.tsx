@@ -29,7 +29,15 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
   t,
 }) => {
   const hasMultipleImages = item.images && item.images.length > 1;
-  const imagePath = item.images ? `/images/${item.images[currentImageIndex]}` : '';
+  const mediaPath = item.images ? `/images/${item.images[currentImageIndex]}` : '';
+
+  // ファイル拡張子で動画かどうかを判定
+  const isVideo = (filename: string) => {
+    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
+    return videoExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+  };
+
+  const currentIsVideo = item.images ? isVideo(item.images[currentImageIndex]) : false;
 
   const itemStyle = {
     border: '1px solid #e8e8e8',
@@ -183,26 +191,47 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
             width: '100%',
             height: '100%',
           }}>
-            <Image
-              src={imagePath}
-              alt={item.title}
-              width={300}
-              height={200}
-              style={{
-                ...imageStyle,
-                width: '100%',
-                height: '100%',
-              }}
-              onClick={() => onImageClick(imagePath, item.images || [], currentImageIndex)}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.08)';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            />
+            {currentIsVideo ? (
+              <video
+                src={mediaPath}
+                style={{
+                  ...imageStyle,
+                  width: '100%',
+                  height: '100%',
+                }}
+                controls
+                onClick={() => onImageClick(mediaPath, item.images || [], currentImageIndex)}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.08)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              />
+            ) : (
+              <Image
+                src={mediaPath}
+                alt={item.title}
+                width={300}
+                height={200}
+                style={{
+                  ...imageStyle,
+                  width: '100%',
+                  height: '100%',
+                }}
+                onClick={() => onImageClick(mediaPath, item.images || [], currentImageIndex)}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.08)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              />
+            )}
           </div>
           {hasMultipleImages && (
             <button

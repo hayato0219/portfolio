@@ -29,7 +29,7 @@ const Services: React.FC<ServicesProps> = ({ services, t }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [expandedYears, setExpandedYears] = useState<{ [key: string]: boolean }>({
     '2025': false,
-    '2024': false,
+    '2024': true,
   });
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [modalImageList, setModalImageList] = useState<string[]>([]);

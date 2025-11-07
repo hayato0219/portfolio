@@ -19,6 +19,14 @@ const ImageModal: React.FC<ImageModalProps> = ({
 }) => {
   const hasMultipleImages = imageList.length > 1;
 
+  // ファイル拡張子で動画かどうかを判定
+  const isVideo = (filename: string) => {
+    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
+    return videoExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+  };
+
+  const currentIsVideo = isVideo(imageSrc);
+
   return (
     <div
       style={{
@@ -93,16 +101,30 @@ const ImageModal: React.FC<ImageModalProps> = ({
           </button>
         )}
 
-        <img
-          src={imageSrc}
-          alt="Expanded view"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain',
-            borderRadius: '8px',
-          }}
-        />
+        {currentIsVideo ? (
+          <video
+            src={imageSrc}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              borderRadius: '8px',
+            }}
+            controls
+            autoPlay
+          />
+        ) : (
+          <img
+            src={imageSrc}
+            alt="Expanded view"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              borderRadius: '8px',
+            }}
+          />
+        )}
 
         {/* 右矢印ボタン（複数画像の場合のみ表示） */}
         {hasMultipleImages && (

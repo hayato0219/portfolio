@@ -51,7 +51,7 @@ export const translations: TranslationsObject = {
             description: "Developing an image generation & pronunciation evaluation & English vocabulary learning app",
             date: "Development Period: 2025/04 -",
             technologies: "Next.js(TypeScript), shadcn/ui, vercel, MongoDB, Firebase (Storage), OpenAI API (DALL-E3), Azure Speech Services API (Pronunciation Assessment)",
-            images: ["currentResearch.png", "currentResearch-ImageGeneration.png", "currentResearch-PronunciationAssessment.png"]
+            images: ["currentResearch.png", "currentResearch-ImageGeneration.mp4", "currentResearch-ImageEdit.mp4","currentResearch-PronunciationAssessment.mp4"]
           },
           {
             title: "5-day Internships at 2 Companies",
@@ -79,7 +79,7 @@ export const translations: TranslationsObject = {
             description: "Estimated speech bubbles containing words that readers did not understand from their audio and eye-tracking information while reading English manga aloud",
             date: "Research Period: 2024/4 - 2025/3",
             technologies: "Python",
-            tags: "Oral presentation at ABC2025 (peer-reviewed international conference)\n(Paper URL: https://ieeexplore.ieee.org/document/11118482)\nConducted experiments in France",
+            tags: "Oral presentation at ABC2025 (peer-reviewed international conference)\nPaper URL: https://ieeexplore.ieee.org/document/11118482\nConducted experiments in France",
             images: ["pastResearch.jpeg"]
           },
         ]
@@ -148,7 +148,7 @@ export const translations: TranslationsObject = {
             description: "画像生成&発音評価&英単語学習アプリを開発中です",
             date: "開発期間: 2025/04 -",
             technologies: "Next.js(TypeScript), shadcn/ui, vercel, MongoDB, Firebase (Storage), OpenAI API (DALL-E3), Azure Speech Services API (Pronunciation Assessment)",
-            images: ["currentResearch.png", "currentResearch-ImageGeneration.png", "currentResearch-PronunciationAssessment.png"]
+            images: ["currentResearch.png", "currentResearch-ImageGeneration.mp4", "currentResearch-ImageEdit.mp4", "currentResearch-PronunciationAssessment.mp4"]
           },
           {
             title: "2社の5daysインターン",
@@ -176,7 +176,7 @@ export const translations: TranslationsObject = {
             description: "英語漫画を音読してもらい、その音声と視線情報から音読者の意味の分からない単語を含む吹き出しを推定しました",
             date: "研究期間: 2024/4 - 2025/3",
             technologies: "Python",
-            tags: "ABC2025(査読ありの国際学会)で口頭発表\n(論文のURL: https://ieeexplore.ieee.org/document/11118482)\nフランスでの実験を行いました",
+            tags: "ABC2025(査読ありの国際学会)で口頭発表\n論文のURL: https://ieeexplore.ieee.org/document/11118482\nフランスでの実験を行いました",
             images: ["pastResearch.jpeg"]
           },
         ]
