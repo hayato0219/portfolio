@@ -17,9 +17,9 @@ const siteProps: SiteProps = {
   },
 };
 
-export default function Index() {
+export default function Page() {
   const [language, setLanguage] = useState<'en' | 'ja'>("ja");
-  
+
   const changeLanguage = (lang: 'en' | 'ja') => {
     setLanguage(lang);
   };
@@ -28,10 +28,10 @@ export default function Index() {
 
   return (
     <>
-      <div id="main" style={{ 
-        transform: "scale(0.9)", 
-        transformOrigin: "top center", 
-        width: "111.11%", 
+      <div id="main" style={{
+        transform: "scale(0.9)",
+        transformOrigin: "top center",
+        width: "111.11%",
         marginLeft: "-5.56%",
         height: "111.11vh",
         overflow: "visible"

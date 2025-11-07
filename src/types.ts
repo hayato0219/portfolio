@@ -30,7 +30,7 @@ export interface Translations {
       date?: string;
       technologies?: string;
       tags?: string;
-      image?: string;
+      images?: string[];
     }>;
   }>;
   toolsList: string[];

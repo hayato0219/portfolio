@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 import type { SiteProps, Translations } from '@/types';
-import image from '../images/me.jpeg';
 import SkillSet from './SkillSet';
 import AboutMe from './AboutMe';
 import Services from './Services';
@@ -35,7 +34,7 @@ const Home: React.FC<HomeProps> = ({ siteProps, t }) => {
   React.useEffect(() => {
     // クライアントサイドでのみwindowにアクセス
     setIsMobile(window.innerWidth <= 768);
-    
+
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -50,18 +49,18 @@ const Home: React.FC<HomeProps> = ({ siteProps, t }) => {
     gap: isMobile ? '2rem' : '4rem',
   };
 
-  const leftColumnStyle: React.CSSProperties = { 
-    flex: '1', 
-    display: 'flex', 
-    flexDirection: 'column', 
+  const leftColumnStyle: React.CSSProperties = {
+    flex: '1',
+    display: 'flex',
+    flexDirection: 'column',
     gap: '2.5rem',
     minWidth: isMobile ? '100%' : 'auto',
   };
-  
-  const rightColumnStyle: React.CSSProperties = { 
-    flex: '2', 
-    display: 'flex', 
-    flexDirection: 'column', 
+
+  const rightColumnStyle: React.CSSProperties = {
+    flex: '2',
+    display: 'flex',
+    flexDirection: 'column',
     gap: '2.5rem',
     minWidth: isMobile ? '100%' : 'auto',
   };
@@ -71,12 +70,12 @@ const Home: React.FC<HomeProps> = ({ siteProps, t }) => {
       <div style={responsiveContainerStyle}>
         <div style={leftColumnStyle}>
           <div style={{ textAlign: 'center' }}>
-            <Image 
-              src={image} 
-              alt={imageAltText} 
+            <Image
+              src="/images/me.jpeg"
+              alt={imageAltText}
               width={180}
               height={180}
-              style={{ borderRadius: '50%', objectFit: 'cover' }} 
+              style={{ borderRadius: '50%', objectFit: 'cover' }}
             />
             <h3 style={{ marginTop: '1.5rem', color: '#333', fontSize: '1.4rem', fontWeight: '600', whiteSpace: 'pre-line' }}>{t.greeting}</h3>
           </div>

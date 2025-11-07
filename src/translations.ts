@@ -6,30 +6,30 @@ export const translations: TranslationsObject = {
     home: "Home",
     about: "About",
     contact: "Contact",
-    
+
     // Home/Intro
     greeting: "Hi there!\nI'm Hayato Seki!",
-    
+
     // Sections
     aboutMe: "About Me",
     skillSet: "Skill Set",
     experience: "Experience",
     tools: "Tools",
-    
+
     // Footer
     contactTitle: "Contact",
     email: "Email",
     github: "GitHub",
     createdBy: "Created by",
     creatorName: "Hayato Seki",
-    
+
     // Language toggle
     switchToJapanese: "Japanese",
     switchToEnglish: "English",
 
     // About content
     aboutDescription: "I am a graduate student majoring in Informatics, primarily developing Next.js web applications using AI coding. I aim to solve real-world challenges by delivering advanced IT technologies to users through front-end development. My personality is honest, empathetic, and modest. My hobbies include watching variety shows (mainly Chidori's programs), anime, manga, and working out.",
-    
+
     // Skills
     skills: [
       "Python",
@@ -38,7 +38,7 @@ export const translations: TranslationsObject = {
       "Machine Learning",
       "Data Analysis",
     ],
-    
+
     // Experience/Services
     experienceList: [
       {
@@ -49,7 +49,7 @@ export const translations: TranslationsObject = {
             description: "Developing an image generation & pronunciation evaluation & English vocabulary learning app",
             date: "Development Period: 2025/04 -",
             technologies: "Technologies: Next.js(TypeScript), shadcn/ui, vercel, MongoDB, Firebase (Storage), OpenAI API (DALL-E3), Azure Speech Services API (Pronunciation Assessment)",
-            image: "currentResearch.png"
+            images: ["currentResearch.png", "currentResearch-ImageGeneration.png", "currentResearch-PronunciationAssessment.png"]
           },
           {
             title: "5-day Internships at 2 Companies",
@@ -57,7 +57,7 @@ export const translations: TranslationsObject = {
             date: "Development Period: 2025/08",
             technologies: "Technologies: Next.js(TypeScript), MongoDB, Firebase (Firestore, Cloud Functions)",
             tags: "→ Won the Excellence Award at BIPROGY",
-            image: "internshipICON.jpg"
+            images: ["internshipICON.jpg"]
           },
           {
             title: "App Created in Data Analysis Course",
@@ -65,7 +65,7 @@ export const translations: TranslationsObject = {
             date: "Development Period: 2025/07",
             technologies: "Technologies: Next.js(TypeScript), Flask(Python), OpenStreetMap, Leaflet.js",
             tags: "→ Won 1st place among all 8 teams",
-            image: "nakamozuApp.png"
+            images: ["nakamozuApp.png"]
           }
         ]
       },
@@ -78,12 +78,12 @@ export const translations: TranslationsObject = {
             date: "Research Period: 2024/4 - 2025/3",
             technologies: "Technologies: Python",
             tags: "→ Oral presentation at ABC2025 (peer-reviewed international conference)\n(Paper URL: https://ieeexplore.ieee.org/document/11118482)\n→ Conducted experiments in France",
-            image: "pastResearch.jpeg"
+            images: ["pastResearch.jpeg"]
           },
         ]
       }
     ],
-    
+
     // Tools list
     toolsList: [
       "Git & GitHub",
@@ -101,30 +101,30 @@ export const translations: TranslationsObject = {
     home: "ホーム",
     about: "自己紹介",
     contact: "お問い合わせ",
-    
+
     // Home/Intro
     greeting: "こんにちは！\n関勇人（せきはやと）です！",
-    
+
     // Sections
     aboutMe: "自己紹介",
     skillSet: "スキルセット",
     experience: "経験",
     tools: "ツール",
-    
+
     // Footer
     contactTitle: "お問い合わせ",
     email: "メール",
     github: "GitHub",
     createdBy: "作成者",
     creatorName: "関勇人",
-    
+
     // Language toggle
     switchToJapanese: "日本語",
     switchToEnglish: "英語",
 
     // About content
     aboutDescription: "私は情報学専攻の大学院生で、主にNext.jsのWebアプリをAIコーディングによって開発しています。より高度なIT技術をフロントエンドを介してユーザーに届けることで実社会の課題を解決したいと考えています。性格は素直で、共感力があり、控えめです。趣味はバラエティ番組（主に千鳥の番組）、アニメ、漫画を見ることと筋トレをすることです。",
-    
+
     // Skills
     skills: [
       "Python",
@@ -133,7 +133,7 @@ export const translations: TranslationsObject = {
       "機械学習",
       "データ分析",
     ],
-    
+
     // Experience/Services
     experienceList: [
       {
@@ -144,7 +144,7 @@ export const translations: TranslationsObject = {
             description: "画像生成&発音評価&英単語学習アプリを開発中です",
             date: "開発期間: 2025/04 -",
             technologies: "使用技術: Next.js(TypeScript), shadcn/ui, vercel, MongoDB, Firebase (Storage), OpenAI API (DALL-E3), Azure Speech Services API (Pronunciation Assessment)",
-            image: "currentResearch.png"
+            images: ["currentResearch.png", "currentResearch-ImageGeneration.png", "currentResearch-PronunciationAssessment.png"]
           },
           {
             title: "2社の5daysインターン",
@@ -152,7 +152,7 @@ export const translations: TranslationsObject = {
             date: "開発期間: 2025/08",
             technologies: "使用技術: Next.js(TypeScript), MongoDB, Firebase (Firestore, Cloud Functions)",
             tags: "→ BIPROGYは最優秀賞を受賞しました",
-            image: "internshipICON.jpg"
+            images: ["internshipICON.jpg"]
           },
           {
             title: "データ分析の授業で作成したアプリ",
@@ -160,7 +160,7 @@ export const translations: TranslationsObject = {
             date: "開発期間: 2025/07",
             technologies: "使用技術: Next.js(TypeScript), Flask(Python), OpenStreetMap, Leaflet.js",
             tags: "→ 全8チームの中で優勝しました",
-            image: "nakamozuApp.png"
+            images: ["nakamozuApp.png"]
           }
         ]
       },
@@ -173,12 +173,12 @@ export const translations: TranslationsObject = {
             date: "研究期間: 2024/4 - 2025/3",
             technologies: "使用技術: Python",
             tags: "→ ABC2025(査読ありの国際学会)で口頭発表\n(論文のURL: https://ieeexplore.ieee.org/document/11118482)\n→ フランスでの実験を行いました",
-            image: "pastResearch.jpeg"
+            images: ["pastResearch.jpeg"]
           },
         ]
       }
     ],
-    
+
     // Tools list
     toolsList: [
       "Git & GitHub",
