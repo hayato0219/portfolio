@@ -43,8 +43,10 @@ const ImageModal: React.FC<ImageModalProps> = ({
       <div
         style={{
           position: 'relative',
-          maxWidth: '90vw',
-          maxHeight: '90vh',
+          width: '80vw',
+          maxWidth: '1200px',
+          height: '75vh',
+          maxHeight: '800px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -59,26 +61,35 @@ const ImageModal: React.FC<ImageModalProps> = ({
               left: '-60px',
               top: '50%',
               transform: 'translateY(-50%)',
-              background: 'rgba(255, 255, 255, 0.9)',
+              background: 'rgba(255, 255, 255, 0.95)',
               border: 'none',
               borderRadius: '50%',
-              width: '50px',
-              height: '50px',
-              fontSize: '2rem',
+              width: '48px',
+              height: '48px',
+              fontSize: '24px',
               cursor: 'pointer',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               color: '#333',
-              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.5)',
+              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.3)',
               zIndex: 10000,
+              transition: 'all 0.2s ease',
             }}
             onClick={(e) => {
               e.stopPropagation();
               onNavigate('prev');
             }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 1)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+            }}
           >
-            &#x2190;
+            ‹
           </button>
         )}
 
@@ -86,8 +97,8 @@ const ImageModal: React.FC<ImageModalProps> = ({
           src={imageSrc}
           alt="Expanded view"
           style={{
-            maxWidth: '100%',
-            maxHeight: '90vh',
+            width: '100%',
+            height: '100%',
             objectFit: 'contain',
             borderRadius: '8px',
           }}
@@ -101,59 +112,75 @@ const ImageModal: React.FC<ImageModalProps> = ({
               right: '-60px',
               top: '50%',
               transform: 'translateY(-50%)',
-              background: 'rgba(255, 255, 255, 0.9)',
+              background: 'rgba(255, 255, 255, 0.95)',
               border: 'none',
               borderRadius: '50%',
-              width: '50px',
-              height: '50px',
-              fontSize: '2rem',
+              width: '48px',
+              height: '48px',
+              fontSize: '24px',
               cursor: 'pointer',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               color: '#333',
-              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.5)',
+              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.3)',
               zIndex: 10000,
+              transition: 'all 0.2s ease',
             }}
             onClick={(e) => {
               e.stopPropagation();
               onNavigate('next');
             }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 1)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+            }}
           >
-            &#x2192;
+            ›
           </button>
         )}
 
-        {/* 閉じるボタン */}
+        {/* 閉じるボタン（Google Driveスタイル） */}
         <button
           style={{
             position: 'absolute',
-            top: '-50px',
-            right: '-50px',
-            background: 'white',
+            top: '-60px',
+            right: '0px',
+            background: 'rgba(60, 64, 67, 0.95)',
             border: 'none',
             borderRadius: '50%',
-            width: '45px',
-            height: '45px',
-            fontSize: '2rem',
+            width: '40px',
+            height: '40px',
+            fontSize: '20px',
             cursor: 'pointer',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            color: '#333',
-            boxShadow: '0 2px 12px rgba(0, 0, 0, 0.5)',
-            fontWeight: 'bold',
+            color: '#fff',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)',
+            fontWeight: 'normal',
             zIndex: 10000,
+            transition: 'all 0.2s ease',
           }}
           onClick={(e) => {
             e.stopPropagation();
             onClose();
           }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(80, 84, 87, 1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(60, 64, 67, 0.95)';
+          }}
         >
-          ×
+          ✕
         </button>
 
-        {/* 画像カウンター（複数画像の場合のみ表示） */}
+        {/* ドットインジケーター（複数画像の場合のみ表示） */}
         {hasMultipleImages && (
           <div
             style={{
@@ -161,16 +188,37 @@ const ImageModal: React.FC<ImageModalProps> = ({
               bottom: '-40px',
               left: '50%',
               transform: 'translateX(-50%)',
-              background: 'rgba(255, 255, 255, 0.9)',
-              padding: '8px 16px',
+              display: 'flex',
+              gap: '8px',
+              alignItems: 'center',
+              padding: '8px 12px',
+              background: 'rgba(0, 0, 0, 0.5)',
               borderRadius: '20px',
-              fontSize: '0.9rem',
-              fontWeight: '600',
-              color: '#333',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
             }}
           >
-            {currentIndex + 1} / {imageList.length}
+            {imageList.map((_, index) => (
+              <div
+                key={index}
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  backgroundColor: index === currentIndex ? '#fff' : 'rgba(255, 255, 255, 0.4)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // クリックで該当の画像に移動する機能を追加する場合
+                  const diff = index - currentIndex;
+                  if (diff > 0) {
+                    for (let i = 0; i < diff; i++) onNavigate('next');
+                  } else if (diff < 0) {
+                    for (let i = 0; i < Math.abs(diff); i++) onNavigate('prev');
+                  }
+                }}
+              />
+            ))}
           </div>
         )}
       </div>

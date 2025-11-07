@@ -93,6 +93,7 @@ const Services: React.FC<ServicesProps> = ({ services, t }) => {
             currentImageIndexes={currentImageIndexes}
             onImageNavigation={handleImageNavigation}
             onImageClick={openModal}
+            t={t}
           />
         ))}
       </div>

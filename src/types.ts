@@ -17,6 +17,8 @@ export interface Translations {
   skillsTitle?: string;
   experience: string;
   tools: string;
+  technologiesLabel: string;
+  achievementsLabel: string;
   aboutDescription: string;
   greetingHi?: string;
   greetingName?: string;

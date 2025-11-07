@@ -15,6 +15,8 @@ export const translations: TranslationsObject = {
     skillSet: "Skill Set",
     experience: "Experience",
     tools: "Tools",
+    technologiesLabel: "Technologies",
+    achievementsLabel: "Achievements",
 
     // Footer
     contactTitle: "Contact",
@@ -48,23 +50,23 @@ export const translations: TranslationsObject = {
             title: "Current Research",
             description: "Developing an image generation & pronunciation evaluation & English vocabulary learning app",
             date: "Development Period: 2025/04 -",
-            technologies: "Technologies: Next.js(TypeScript), shadcn/ui, vercel, MongoDB, Firebase (Storage), OpenAI API (DALL-E3), Azure Speech Services API (Pronunciation Assessment)",
+            technologies: "Next.js(TypeScript), shadcn/ui, vercel, MongoDB, Firebase (Storage), OpenAI API (DALL-E3), Azure Speech Services API (Pronunciation Assessment)",
             images: ["currentResearch.png", "currentResearch-ImageGeneration.png", "currentResearch-PronunciationAssessment.png"]
           },
           {
             title: "5-day Internships at 2 Companies",
             description: "Participated in internships at Rakuten and BIPROGY",
             date: "Development Period: 2025/08",
-            technologies: "Technologies: Next.js(TypeScript), MongoDB, Firebase (Firestore, Cloud Functions)",
-            tags: "→ Won the Excellence Award at BIPROGY",
+            technologies: "Next.js(TypeScript), MongoDB, Firebase (Firestore, Cloud Functions)",
+            tags: "Won the Excellence Award at BIPROGY",
             images: ["internshipICON.jpg"]
           },
           {
             title: "App Created in Data Analysis Course",
             description: "Created an app to visualize Osaka Metro's ticket gate passage data and Sumitomo Electric's car navigation sudden deceleration data",
             date: "Development Period: 2025/07",
-            technologies: "Technologies: Next.js(TypeScript), Flask(Python), OpenStreetMap, Leaflet.js",
-            tags: "→ Won 1st place among all 8 teams",
+            technologies: "Next.js(TypeScript), Flask(Python), OpenStreetMap, Leaflet.js",
+            tags: "Won 1st place among all 8 teams",
             images: ["nakamozuApp.png"]
           }
         ]
@@ -76,8 +78,8 @@ export const translations: TranslationsObject = {
             title: "Graduation Thesis Research",
             description: "Estimated speech bubbles containing words that readers did not understand from their audio and eye-tracking information while reading English manga aloud",
             date: "Research Period: 2024/4 - 2025/3",
-            technologies: "Technologies: Python",
-            tags: "→ Oral presentation at ABC2025 (peer-reviewed international conference)\n(Paper URL: https://ieeexplore.ieee.org/document/11118482)\n→ Conducted experiments in France",
+            technologies: "Python",
+            tags: "Oral presentation at ABC2025 (peer-reviewed international conference)\n(Paper URL: https://ieeexplore.ieee.org/document/11118482)\nConducted experiments in France",
             images: ["pastResearch.jpeg"]
           },
         ]
@@ -110,6 +112,8 @@ export const translations: TranslationsObject = {
     skillSet: "スキルセット",
     experience: "経験",
     tools: "ツール",
+    technologiesLabel: "使用技術",
+    achievementsLabel: "成果・特記事項",
 
     // Footer
     contactTitle: "お問い合わせ",
@@ -143,23 +147,23 @@ export const translations: TranslationsObject = {
             title: "現在の研究",
             description: "画像生成&発音評価&英単語学習アプリを開発中です",
             date: "開発期間: 2025/04 -",
-            technologies: "使用技術: Next.js(TypeScript), shadcn/ui, vercel, MongoDB, Firebase (Storage), OpenAI API (DALL-E3), Azure Speech Services API (Pronunciation Assessment)",
+            technologies: "Next.js(TypeScript), shadcn/ui, vercel, MongoDB, Firebase (Storage), OpenAI API (DALL-E3), Azure Speech Services API (Pronunciation Assessment)",
             images: ["currentResearch.png", "currentResearch-ImageGeneration.png", "currentResearch-PronunciationAssessment.png"]
           },
           {
             title: "2社の5daysインターン",
             description: "楽天、BIPROGYのインターンに行きました",
             date: "開発期間: 2025/08",
-            technologies: "使用技術: Next.js(TypeScript), MongoDB, Firebase (Firestore, Cloud Functions)",
-            tags: "→ BIPROGYは最優秀賞を受賞しました",
+            technologies: "Next.js(TypeScript), MongoDB, Firebase (Firestore, Cloud Functions)",
+            tags: "BIPROGYは最優秀賞を受賞しました",
             images: ["internshipICON.jpg"]
           },
           {
             title: "データ分析の授業で作成したアプリ",
-            description: "大阪メトロさんの改札通過データと住友電工さんのカーナビの急減速データを可視化したアプリを作成",
+            description: "大阪メトロさんの改札通過データと住友電工さんのカーナビの急減速データを可視化したアプリを作成しました",
             date: "開発期間: 2025/07",
-            technologies: "使用技術: Next.js(TypeScript), Flask(Python), OpenStreetMap, Leaflet.js",
-            tags: "→ 全8チームの中で優勝しました",
+            technologies: "Next.js(TypeScript), Flask(Python), OpenStreetMap, Leaflet.js",
+            tags: "全8チームの中で優勝しました",
             images: ["nakamozuApp.png"]
           }
         ]
@@ -171,8 +175,8 @@ export const translations: TranslationsObject = {
             title: "卒業論文の研究",
             description: "英語漫画を音読してもらい、その音声と視線情報から音読者の意味の分からない単語を含む吹き出しを推定しました",
             date: "研究期間: 2024/4 - 2025/3",
-            technologies: "使用技術: Python",
-            tags: "→ ABC2025(査読ありの国際学会)で口頭発表\n(論文のURL: https://ieeexplore.ieee.org/document/11118482)\n→ フランスでの実験を行いました",
+            technologies: "Python",
+            tags: "ABC2025(査読ありの国際学会)で口頭発表\n(論文のURL: https://ieeexplore.ieee.org/document/11118482)\nフランスでの実験を行いました",
             images: ["pastResearch.jpeg"]
           },
         ]

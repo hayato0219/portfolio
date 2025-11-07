@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ExperienceItem from './ExperienceItem';
+import type { Translations } from '@/types';
 
 interface ExperienceItemType {
   title: string;
@@ -20,6 +21,7 @@ interface YearSectionProps {
   currentImageIndexes: { [key: string]: number };
   onImageNavigation: (itemKey: string, direction: 'next' | 'prev', imageCount: number) => void;
   onImageClick: (imagePath: string, imageList: string[], currentIndex: number) => void;
+  t: Translations;
 }
 
 const YearSection: React.FC<YearSectionProps> = ({
@@ -30,6 +32,7 @@ const YearSection: React.FC<YearSectionProps> = ({
   currentImageIndexes,
   onImageNavigation,
   onImageClick,
+  t,
 }) => {
   const yearHeaderStyle = {
     backgroundColor: 'transparent',
@@ -91,6 +94,7 @@ const YearSection: React.FC<YearSectionProps> = ({
                 onImageNavigation(itemKey, direction, imageCount)
               }
               onImageClick={onImageClick}
+              t={t}
             />
           );
         })}
