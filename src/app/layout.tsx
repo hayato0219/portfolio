@@ -1,8 +1,19 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Hayato Seki - Graduate Student Portfolio',
-  description: 'Personal portfolio of Hayato Seki, a graduate student majoring in Informatics',
+  title: 'Hayato Seki — Portfolio',
+  description:
+    'Personal portfolio of Hayato Seki, a graduate student majoring in Informatics who builds Next.js web applications.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b0b0f' },
+  ],
 };
 
 export default function RootLayout({
@@ -12,12 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <head>
-        <meta charSet="UTF-8" />
-      </head>
-      <body style={{ margin: 0, padding: 0, overflowX: 'hidden' }}>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

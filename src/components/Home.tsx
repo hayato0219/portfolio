@@ -1,95 +1,47 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import type { SiteProps, Translations } from '@/types';
-import SkillSet from './SkillSet';
+import TagList from './TagList';
 import AboutMe from './AboutMe';
 import { Services } from './experience';
-import Tools from './Tools';
-
-const imageAltText = 'Hayato Seki';
 
 interface HomeProps {
   siteProps: SiteProps;
   t: Translations;
 }
 
-const Home: React.FC<HomeProps> = ({ siteProps, t }) => {
-  const { name } = siteProps;
-
-  const containerStyle: React.CSSProperties = {
-    padding: '2rem 4rem',
-    margin: '0 auto',
-    maxWidth: '1200px',
-    display: 'flex',
-    gap: '4rem',
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    backgroundColor: '#fff',
-  };
-
-  // レスポンシブ対応
-  const [isMobile, setIsMobile] = React.useState(false);
-
-  React.useEffect(() => {
-    // クライアントサイドでのみwindowにアクセス
-    setIsMobile(window.innerWidth <= 768);
-
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const responsiveContainerStyle: React.CSSProperties = {
-    ...containerStyle,
-    flexDirection: isMobile ? 'column' : 'row',
-    padding: isMobile ? '1.5rem 1rem' : '2rem 4rem',
-    gap: isMobile ? '2rem' : '4rem',
-  };
-
-  const leftColumnStyle: React.CSSProperties = {
-    flex: '1',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2.5rem',
-    minWidth: isMobile ? '100%' : 'auto',
-  };
-
-  const rightColumnStyle: React.CSSProperties = {
-    flex: '2',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2.5rem',
-    minWidth: isMobile ? '100%' : 'auto',
-  };
-
+const Home: React.FC<HomeProps> = ({ t }) => {
   return (
-    <section id="home" style={{ backgroundColor: '#fff', paddingTop: '5rem' }}>
-      <div style={responsiveContainerStyle}>
-        <div style={leftColumnStyle}>
-          <div style={{ textAlign: 'center' }}>
+    <>
+      <section id="home" className="hero">
+        <div className="container hero__inner">
+          <div className="hero__avatar">
             <Image
               src="/images/me.jpeg"
-              alt={imageAltText}
-              width={180}
-              height={180}
-              style={{ borderRadius: '50%', objectFit: 'cover' }}
+              alt="Hayato Seki"
+              width={168}
+              height={168}
+              priority
             />
-            <h3 style={{ marginTop: '1.5rem', color: '#333', fontSize: '1.4rem', fontWeight: '600', whiteSpace: 'pre-line' }}>{t.greeting}</h3>
           </div>
-          <SkillSet skills={t.skills} t={t} />
-          <Tools tools={t.toolsList} t={t} />
+          <div>
+            <h1 className="hero__greeting">{t.greeting}</h1>
+            {t.heroTagline && <p className="hero__role">{t.heroTagline}</p>}
+          </div>
         </div>
-        <div style={rightColumnStyle}>
+      </section>
+
+      <div className="container layout">
+        <aside className="layout__aside">
+          <TagList title={t.skillSet} items={t.skills} />
+          <TagList title={t.tools} items={t.toolsList} />
+        </aside>
+        <div className="layout__main">
           <AboutMe about={t.aboutDescription} t={t} />
-          <div style={{ marginTop: '2rem' }}>
-            <Services services={t.experienceList} t={t} />
-          </div>
+          <Services services={t.experienceList} t={t} />
         </div>
       </div>
-    </section>
+    </>
   );
 };
 

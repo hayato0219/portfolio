@@ -2,25 +2,20 @@
 
 import React from 'react';
 import ExperienceItem from './ExperienceItem';
-import type { Translations } from '@/types';
-
-interface ExperienceItemType {
-  title: string;
-  description: string;
-  date?: string;
-  images?: string[];
-  technologies?: string[];
-  tags?: string;
-}
+import type { Translations, ExperienceItem as ExperienceItemType } from '@/types';
 
 interface YearSectionProps {
   year: string;
   items: ExperienceItemType[];
   isExpanded: boolean;
   onToggle: () => void;
-  currentImageIndexes: { [key: string]: number };
-  onImageNavigation: (itemKey: string, direction: 'next' | 'prev', imageCount: number) => void;
-  onImageClick: (imagePath: string, imageList: string[], currentIndex: number) => void;
+  currentImageIndexes: Record<string, number>;
+  onImageNavigation: (
+    itemKey: string,
+    direction: 'next' | 'prev',
+    imageCount: number
+  ) => void;
+  onImageClick: (imageList: string[], currentIndex: number) => void;
   t: Translations;
 }
 
@@ -34,70 +29,38 @@ const YearSection: React.FC<YearSectionProps> = ({
   onImageClick,
   t,
 }) => {
-  const yearHeaderStyle = {
-    backgroundColor: 'transparent',
-    padding: '18px 24px',
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    transition: 'all 0.3s ease',
-    marginBottom: '0.5rem',
-    borderBottom: '2px solid #333',
-  };
-
-  const yearHeaderHoverStyle = {
-    borderBottomColor: '#44f9ccff',
-  };
-
-  const arrowStyle = {
-    fontSize: '1.2rem',
-    transition: 'transform 0.3s ease',
-    transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-  };
-
-  const detailsContainerStyle = {
-    maxHeight: isExpanded ? '10000px' : '0',
-    overflow: 'hidden',
-    transition: 'max-height 0.5s ease',
-  };
-
   return (
-    <div style={{ marginBottom: '1rem' }}>
-      <div
-        style={yearHeaderStyle}
+    <div className="year">
+      <button
+        type="button"
+        className="year__header"
         onClick={onToggle}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.borderBottomColor = yearHeaderHoverStyle.borderBottomColor;
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.borderBottomColor = '#333';
-        }}
+        aria-expanded={isExpanded}
       >
-        <span style={{ fontSize: '1.4rem', fontWeight: '700', color: '#1a1a1a' }}>
-          {year}
+        <span className="year__label">{year}</span>
+        <span className="year__chevron" aria-hidden="true">
+          ▼
         </span>
-        <span style={arrowStyle}>▼</span>
-      </div>
-      <div style={detailsContainerStyle}>
-        {items.map((item, index) => {
-          const itemKey = `${year}-${index}`;
-          const itemImageIndex = currentImageIndexes[itemKey] || 0;
+      </button>
 
-          return (
-            <ExperienceItem
-              key={index}
-              item={item}
-              itemKey={itemKey}
-              currentImageIndex={itemImageIndex}
-              onImageNavigation={(direction, imageCount) =>
-                onImageNavigation(itemKey, direction, imageCount)
-              }
-              onImageClick={onImageClick}
-              t={t}
-            />
-          );
-        })}
+      <div className={`year__body${isExpanded ? ' year__body--open' : ''}`}>
+        <div className="year__body-inner">
+          {items.map((item, index) => {
+            const itemKey = `${year}-${index}`;
+            return (
+              <ExperienceItem
+                key={itemKey}
+                item={item}
+                currentImageIndex={currentImageIndexes[itemKey] || 0}
+                onImageNavigation={(direction, imageCount) =>
+                  onImageNavigation(itemKey, direction, imageCount)
+                }
+                onImageClick={onImageClick}
+                t={t}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );

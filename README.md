@@ -34,6 +34,23 @@ A personal portfolio website built with Next.js and TypeScript to showcase Hayat
     ```
 4.  Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Environment Variables
+
+The chatbot calls the Gemini API through a server-side route (`/api/chat`) so the
+key is never exposed to the browser. Set the following (in `.env.local` for local
+development, and in the Vercel project settings for production):
+
+```bash
+# Server-side only — do NOT prefix with NEXT_PUBLIC_
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Optional — Gemini model to use (defaults to gemini-2.5-flash)
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+> Note: `GEMINI_API_KEY` replaces the previous `NEXT_PUBLIC_GEMINI_API_KEY`, which
+> shipped the key to the client. Update the variable name in Vercel after deploying.
+
 ## Deployment
 
 The website is deployed on Vercel.

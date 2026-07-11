@@ -9,6 +9,7 @@ export const translations: TranslationsObject = {
 
     // Home/Intro
     greeting: "Hi there!\nI'm Hayato Seki!",
+    heroTagline: "Graduate student in Informatics · building Next.js web apps with AI coding.",
 
     // Sections
     aboutMe: "About Me",
@@ -106,6 +107,7 @@ export const translations: TranslationsObject = {
 
     // Home/Intro
     greeting: "こんにちは！\n関勇人（せきはやと）です！",
+    heroTagline: "情報学専攻の大学院生 · AIコーディングでNext.jsアプリを開発しています。",
 
     // Sections
     aboutMe: "自己紹介",

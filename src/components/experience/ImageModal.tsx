@@ -1,244 +1,100 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface ImageModalProps {
-  imageSrc: string;
   imageList: string[];
   currentIndex: number;
   onClose: () => void;
   onNavigate: (direction: 'next' | 'prev') => void;
+  onSelect: (index: number) => void;
 }
 
+const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.ogg', '.mov'];
+const isVideo = (filename: string) =>
+  VIDEO_EXTENSIONS.some((ext) => filename.toLowerCase().endsWith(ext));
+
 const ImageModal: React.FC<ImageModalProps> = ({
-  imageSrc,
   imageList,
   currentIndex,
   onClose,
   onNavigate,
+  onSelect,
 }) => {
   const hasMultipleImages = imageList.length > 1;
+  const currentName = imageList[currentIndex] ?? '';
+  const imageSrc = `/images/${currentName}`;
+  const currentIsVideo = isVideo(currentName);
 
-  // ファイル拡張子で動画かどうかを判定
-  const isVideo = (filename: string) => {
-    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
-    return videoExtensions.some(ext => filename.toLowerCase().endsWith(ext));
-  };
-
-  const currentIsVideo = isVideo(imageSrc);
+  // Keyboard controls: Esc to close, arrows to navigate.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      else if (hasMultipleImages && e.key === 'ArrowRight') onNavigate('next');
+      else if (hasMultipleImages && e.key === 'ArrowLeft') onNavigate('prev');
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [hasMultipleImages, onClose, onNavigate]);
 
   return (
     <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.9)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 99999,
-        overflow: 'hidden',
-        margin: 0,
-        padding: 0,
-      }}
+      className="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Media viewer"
       onClick={onClose}
     >
-      <div
-        style={{
-          position: 'relative',
-          width: '80vw',
-          maxWidth: '1200px',
-          height: '75vh',
-          maxHeight: '800px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* 左矢印ボタン（複数画像の場合のみ表示） */}
+      <div className="modal__stage" onClick={(e) => e.stopPropagation()}>
         {hasMultipleImages && (
           <button
-            style={{
-              position: 'absolute',
-              left: '-60px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'rgba(255, 255, 255, 0.95)',
-              border: 'none',
-              borderRadius: '50%',
-              width: '48px',
-              height: '48px',
-              fontSize: '24px',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: '#333',
-              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.3)',
-              zIndex: 10000,
-              transition: 'all 0.2s ease',
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onNavigate('prev');
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 1)';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-            }}
+            type="button"
+            className="modal__btn modal__btn--prev"
+            aria-label="Previous"
+            onClick={() => onNavigate('prev')}
           >
             ‹
           </button>
         )}
 
         {currentIsVideo ? (
-          <video
-            src={imageSrc}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              borderRadius: '8px',
-            }}
-            controls
-            autoPlay
-          />
+          <video className="modal__media" src={imageSrc} controls autoPlay />
         ) : (
-          <img
-            src={imageSrc}
-            alt="Expanded view"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              borderRadius: '8px',
-            }}
-          />
+          // eslint-disable-next-line @next/next/no-img-element
+          <img className="modal__media" src={imageSrc} alt="Expanded view" />
         )}
 
-        {/* 右矢印ボタン（複数画像の場合のみ表示） */}
         {hasMultipleImages && (
           <button
-            style={{
-              position: 'absolute',
-              right: '-60px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'rgba(255, 255, 255, 0.95)',
-              border: 'none',
-              borderRadius: '50%',
-              width: '48px',
-              height: '48px',
-              fontSize: '24px',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: '#333',
-              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.3)',
-              zIndex: 10000,
-              transition: 'all 0.2s ease',
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onNavigate('next');
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 1)';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
-            }}
+            type="button"
+            className="modal__btn modal__btn--next"
+            aria-label="Next"
+            onClick={() => onNavigate('next')}
           >
             ›
           </button>
         )}
 
-        {/* 閉じるボタン（Google Driveスタイル） */}
         <button
-          style={{
-            position: 'absolute',
-            top: '-60px',
-            right: '0px',
-            background: 'rgba(60, 64, 67, 0.95)',
-            border: 'none',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            fontSize: '20px',
-            cursor: 'pointer',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            color: '#fff',
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)',
-            fontWeight: 'normal',
-            zIndex: 10000,
-            transition: 'all 0.2s ease',
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            onClose();
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(80, 84, 87, 1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(60, 64, 67, 0.95)';
-          }}
+          type="button"
+          className="modal__btn modal__btn--close"
+          aria-label="Close"
+          onClick={onClose}
         >
           ✕
         </button>
 
-        {/* ドットインジケーター（複数画像の場合のみ表示） */}
         {hasMultipleImages && (
-          <div
-            style={{
-              position: 'absolute',
-              bottom: '-40px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              gap: '8px',
-              alignItems: 'center',
-              padding: '8px 12px',
-              background: 'rgba(0, 0, 0, 0.5)',
-              borderRadius: '20px',
-            }}
-          >
+          <div className="modal__dots">
             {imageList.map((_, index) => (
-              <div
+              <button
+                type="button"
                 key={index}
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  backgroundColor: index === currentIndex ? '#fff' : 'rgba(255, 255, 255, 0.4)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  // クリックで該当の画像に移動する機能を追加する場合
-                  const diff = index - currentIndex;
-                  if (diff > 0) {
-                    for (let i = 0; i < diff; i++) onNavigate('next');
-                  } else if (diff < 0) {
-                    for (let i = 0; i < Math.abs(diff); i++) onNavigate('prev');
-                  }
-                }}
+                className={`modal__dot${
+                  index === currentIndex ? ' modal__dot--active' : ''
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+                onClick={() => onSelect(index)}
               />
             ))}
           </div>

@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import type { Translations } from '@/types';
 
@@ -8,15 +6,11 @@ interface AboutMeProps {
   t: Translations;
 }
 
-const AboutMe: React.FC<AboutMeProps> = ({ about, t }) => {
-  const pStyle = { color: '#555', lineHeight: '1.7', fontSize: '1.2rem' };
-
-  return (
-    <div id="about" style={{ scrollMarginTop: '80px' }}>
-      <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', fontWeight: '600', color: '#222' }}>{t.aboutMe}</h2>
-      <p style={pStyle}>{about}</p>
-    </div>
-  );
-};
+const AboutMe: React.FC<AboutMeProps> = ({ about, t }) => (
+  <section id="about" style={{ scrollMarginTop: 'calc(var(--header-h) + 1rem)' }}>
+    <h2 className="section-title">{t.aboutMe}</h2>
+    <p className="about__text">{about}</p>
+  </section>
+);
 
 export default AboutMe;

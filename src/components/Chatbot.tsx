@@ -14,545 +14,173 @@ interface Message {
   text: string;
 }
 
-interface ChatbotProps {
-  t: Translations;
-  siteProps: SiteProps;
-}
-
 const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isTyping]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      setMessages([
-        { type: 'bot', text: t.chatbotWelcome }
-      ]);
+      setMessages([{ type: 'bot', text: t.chatbotWelcome }]);
     }
   }, [isOpen, t.chatbotWelcome, messages.length]);
 
-  useEffect(() => {
-    // クライアントサイドでのみwindowにアクセス
-    setIsMobile(window.innerWidth <= 768);
-    
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // サイト情報をまとめたコンテキストを生成
-  const getSiteContext = () => {
+  // Build a portfolio context string for the model.
+  const buildSystemPrompt = () => {
     let context = `Portfolio Information about ${siteProps.name}:\n\n`;
-    
-    // 自己紹介
     context += `About: ${t.aboutDescription}\n\n`;
-    
-    // スキル
     context += `Skills: ${t.skills.join(', ')}\n\n`;
-    
-    // ツール
     context += `Tools: ${t.toolsList.join(', ')}\n\n`;
-    
-    // 経験
     context += `Experience:\n`;
-    t.experienceList.forEach(yearData => {
+    t.experienceList.forEach((yearData) => {
       context += `${yearData.year}:\n`;
-      yearData.items.forEach(item => {
+      yearData.items.forEach((item) => {
         context += `- ${item.title}: ${item.description}\n`;
-        if (item.technologies) context += `  Technologies: ${item.technologies}\n`;
+        if (item.technologies)
+          context += `  Technologies: ${item.technologies.join(', ')}\n`;
         if (item.tags) context += `  ${item.tags}\n`;
       });
     });
-    
-    // 連絡先
     context += `\nContact: Email: ${siteProps.socials.email}, GitHub: github.com/${siteProps.socials.gitHub}\n`;
-    
-    return context;
+
+    return `You are ${siteProps.name}. **Always use Markdown (headings, bold, bullet points) to format your response for clarity.** Answer questions about their skills, experience, projects, and background based on the following information. Keep answers concise and friendly. Respond in the same language as the question.\n\n${context}`;
   };
 
-  // Gemini APIを使用して応答を生成
+  const errorMessage = (status: number): string => {
+    if (status === 503)
+      return '⚠️ チャット機能は現在利用できません。少し時間をおいてお試しください。';
+    if (status === 429)
+      return '⚠️ リクエストが混み合っています。少し時間をおいてから再度お試しください。';
+    return '❌ エラーが発生しました。もう一度お試しください。';
+  };
+
   const generateResponse = async (question: string): Promise<string> => {
-    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-    
-    if (!apiKey || apiKey === 'your_gemini_api_key_here') {
-      return "❌ APIキーが設定されていません。.envファイルにGemini APIキーを設定してください。\n\n手順：\n1. ルートディレクトリに.envファイルを作成\n2. NEXT_PUBLIC_GEMINI_API_KEY=実際のキー を追加\n3. 無料のAPIキーを取得: https://aistudio.google.com/app/apikey\n4. 開発サーバーを再起動（npm run dev）";
-    }
-
     try {
-      const siteContext = getSiteContext();
-      const systemPrompt = `You are ${siteProps.name}. **Always use Markdown (e.g., headings, bold text, bullet points) to format your response for clarity and readability.** Answer questions about their skills, experience, projects, and background based on the following information. Keep your answers concise and friendly. If asked in Japanese, respond in Japanese. If asked in English, respond in English.\n\n${siteContext}`;
-
-      const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-
-      const response = await fetch(apiUrl, {
+      const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: systemPrompt + "\n\nUser question: " + question
-                }
-              ]
-            }
-          ],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 500,
-          }
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ systemPrompt: buildSystemPrompt(), question }),
       });
 
-      if (!response.ok) {
-        if (response.status === 429) {
-          return "⚠️ **リクエスト制限を超えました**\n\n無料プランでは以下の制限があります：\n- 1分間に60リクエストまで\n- 1日に1,500リクエストまで\n\nしばらく時間をおいてから再度お試しください。";
-        } else if (response.status === 403) {
-          return "🔒 APIキーの認証に失敗しました。APIキーが有効で、.envファイルに正しく設定されているか確認してください。";
-        } else if (response.status === 400) {
-          return "❌ リクエストの形式が無効です。質問の形式に問題がある可能性があります。";
-        } else {
-          return `❌ API Error ${response.status}`;
-        }
-      }
+      if (!res.ok) return errorMessage(res.status);
 
-      const data = await response.json();
-      
-      if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-        return data.candidates[0].content.parts[0].text;
-      } else {
-        throw new Error('Unexpected response format');
-      }
-    } catch (error) {
-      console.error('Error calling Gemini API:', error);
-      
-      if (error instanceof Error && (error.message.includes('Failed to fetch') || error.message.includes('NetworkError'))) {
-        return "🌐 ネットワークエラーです。インターネット接続を確認してください。";
-      }
-      
-      return `❌ エラーが発生しました。再度お試しいただくか、問題が続く場合はサポートにお問い合わせください。`;
+      const data = await res.json();
+      return data.text ?? errorMessage(502);
+    } catch {
+      return '🌐 ネットワークエラーです。インターネット接続を確認してください。';
     }
   };
 
   const handleSend = async () => {
-    if (inputValue.trim() === '') return;
+    const question = inputValue.trim();
+    if (!question || isTyping) return;
 
-    const userMessage: Message = { type: 'user', text: inputValue };
-    setMessages(prev => [...prev, userMessage]);
-    const currentQuestion = inputValue;
+    setMessages((prev) => [...prev, { type: 'user', text: question }]);
     setInputValue('');
     setIsTyping(true);
 
-    try {
-      const botResponse = await generateResponse(currentQuestion);
-      const botMessage: Message = { type: 'bot', text: botResponse };
-      setMessages(prev => [...prev, botMessage]);
-    } catch (error) {
-      const errorMessage: Message = { 
-        type: 'bot', 
-        text: 'エラーが発生しました。もう一度お試しください。' 
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsTyping(false);
-    }
+    const botResponse = await generateResponse(question);
+    setMessages((prev) => [...prev, { type: 'bot', text: botResponse }]);
+    setIsTyping(false);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
 
+  if (!isOpen) {
+    return (
+      <button
+        type="button"
+        className="chat-fab"
+        aria-label={t.chatbotTitle}
+        onClick={() => setIsOpen(true)}
+      >
+        💬
+      </button>
+    );
+  }
+
   return (
-    <>
-      {/* チャットボタン */}
-      {!isOpen && (
+    <div
+      className="chat-window"
+      role="dialog"
+      aria-label={t.chatbotTitle}
+    >
+      <div className="chat-header">
+        <h3>{t.chatbotTitle}</h3>
         <button
-          onClick={() => setIsOpen(true)}
-          style={{
-            position: 'fixed',
-            bottom: isMobile ? '15px' : '20px',
-            right: isMobile ? '15px' : '20px',
-            width: isMobile ? '50px' : '60px',
-            height: isMobile ? '50px' : '60px',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            border: 'none',
-            cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: isMobile ? '1.3rem' : '1.5rem',
-            color: 'white',
-            zIndex: 999,
-            transition: 'transform 0.3s ease',
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          type="button"
+          className="chat-header__close"
+          aria-label="Close chat"
+          onClick={() => setIsOpen(false)}
         >
-          💬
+          ×
         </button>
-      )}
+      </div>
 
-      {/* チャットウィンドウ */}
-      {isOpen && (
-        <div
-          style={{
-            position: 'fixed',
-            bottom: isMobile ? '0' : '20px',
-            right: isMobile ? '0' : '20px',
-            left: isMobile ? '0' : 'auto',
-            top: isMobile ? '0' : 'auto',
-            width: isMobile ? '100%' : '380px',
-            height: isMobile ? '100%' : '700px',
-            maxHeight: isMobile ? '100vh' : '700px',
-            background: 'white',
-            borderRadius: isMobile ? '0' : '12px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-            display: 'flex',
-            flexDirection: 'column',
-            zIndex: 999,
-            overflow: 'hidden',
-          }}
+      <div className="chat-body">
+        {messages.map((msg, index) => (
+          <div key={index} className={`chat-row chat-row--${msg.type}`}>
+            <div className={`chat-bubble chat-bubble--${msg.type}`}>
+              <div className="chat-md">
+                <Markdown
+                  options={{
+                    overrides: {
+                      a: { props: { target: '_blank', rel: 'noopener noreferrer' } },
+                    },
+                  }}
+                >
+                  {msg.text}
+                </Markdown>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {isTyping && (
+          <div className="chat-row chat-row--bot">
+            <div className="chat-bubble chat-bubble--bot">
+              <span className="chat-typing" aria-label="typing">
+                <span />
+                <span />
+                <span />
+              </span>
+            </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      <div className="chat-input">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={t.chatbotPlaceholder}
+          aria-label={t.chatbotPlaceholder}
+        />
+        <button
+          type="button"
+          className="chat-send"
+          aria-label={t.chatbotSend}
+          onClick={handleSend}
+          disabled={isTyping || inputValue.trim() === ''}
         >
-          {/* ヘッダー */}
-          <div
-            style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              color: 'white',
-              padding: isMobile ? '12px 16px' : '16px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <h3 style={{ margin: 0, fontSize: isMobile ? '1rem' : '1.1rem' }}>{t.chatbotTitle}</h3>
-            <button
-              onClick={() => setIsOpen(false)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: 'white',
-                fontSize: isMobile ? '1.8rem' : '1.5rem',
-                cursor: 'pointer',
-                padding: '0',
-                width: isMobile ? '35px' : '30px',
-                height: isMobile ? '35px' : '30px',
-              }}
-            >
-              ×
-            </button>
-          </div>
-
-          {/* メッセージエリア */}
-          <div
-            style={{
-              flex: 1,
-              overflowY: 'auto',
-              padding: isMobile ? '12px' : '16px',
-              background: '#f5f5f5',
-            }}
-          >
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                style={{
-                  marginBottom: '12px',
-                  display: 'flex',
-                  justifyContent: msg.type === 'user' ? 'flex-end' : 'flex-start',
-                }}
-              >
-                <div
-                  style={{
-                    maxWidth: '75%',
-                    padding: '12px 16px',
-                    borderRadius: '12px',
-                    background: msg.type === 'user' 
-                      ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                      : '#f8f9fa',
-                    color: msg.type === 'user' ? 'white' : '#1f1f1f',
-                    fontSize: '0.95rem',
-                    lineHeight: '1.6',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.08)',
-                    wordWrap: 'break-word',
-                    border: msg.type === 'bot' ? '1px solid #e0e0e0' : 'none',
-                  }}
-                >
-                  <Markdown
-                    options={{
-                      overrides: {
-                        p: {
-                          props: {
-                            style: { 
-                              margin: '0.5em 0',
-                              lineHeight: '1.6',
-                              fontWeight: '500',
-                            }
-                          }
-                        },
-                        h1: {
-                          props: {
-                            style: { 
-                              fontSize: '1.4em', 
-                              fontWeight: '600', 
-                              margin: '16px 0 8px 0',
-                              borderBottom: msg.type === 'user' ? '2px solid rgba(255,255,255,0.3)' : '2px solid #e0e0e0',
-                              paddingBottom: '4px',
-                            }
-                          }
-                        },
-                        h2: {
-                          props: {
-                            style: { 
-                              fontSize: '1.25em', 
-                              fontWeight: '600', 
-                              margin: '14px 0 7px 0',
-                              color: msg.type === 'user' ? 'white' : '#333',
-                            }
-                          }
-                        },
-                        h3: {
-                          props: {
-                            style: { 
-                              fontSize: '1.1em', 
-                              fontWeight: '600', 
-                              margin: '12px 0 6px 0',
-                              color: msg.type === 'user' ? 'white' : '#444',
-                            }
-                          }
-                        },
-                        code: {
-                          props: {
-                            style: {
-                              background: msg.type === 'user' ? 'rgba(0,0,0,0.2)' : '#f1f3f4',
-                              padding: '2px 6px',
-                              borderRadius: '4px',
-                              fontFamily: '"Roboto Mono", "Courier New", monospace',
-                              fontSize: '0.9em',
-                              color: msg.type === 'user' ? '#fff' : '#d73a49',
-                              border: msg.type === 'bot' ? '1px solid #e1e4e8' : 'none',
-                            }
-                          }
-                        },
-                        pre: {
-                          props: {
-                            style: {
-                              background: msg.type === 'user' ? 'rgba(0,0,0,0.3)' : '#282c34',
-                              padding: '12px',
-                              borderRadius: '6px',
-                              overflow: 'auto',
-                              margin: '10px 0',
-                              border: msg.type === 'bot' ? '1px solid #e1e4e8' : 'none',
-                            }
-                          },
-                          component: ({ children, ...props }: any) => (
-                            <pre {...props}>
-                              <code style={{
-                                fontFamily: '"Roboto Mono", "Courier New", monospace',
-                                fontSize: '0.85em',
-                                color: '#abb2bf',
-                                display: 'block',
-                              }}>
-                                {children}
-                              </code>
-                            </pre>
-                          ),
-                        },
-                        ul: {
-                          props: {
-                            style: { 
-                              margin: '10px 0', 
-                              paddingLeft: '24px',
-                              lineHeight: '1.8',
-                            }
-                          }
-                        },
-                        ol: {
-                          props: {
-                            style: { 
-                              margin: '10px 0', 
-                              paddingLeft: '24px',
-                              lineHeight: '1.8',
-                            }
-                          }
-                        },
-                        li: {
-                          props: {
-                            style: { 
-                              margin: '6px 0',
-                              lineHeight: '1.6',
-                            }
-                          }
-                        },
-                        a: {
-                          props: {
-                            style: { 
-                              color: msg.type === 'user' ? '#fff' : '#1a73e8', 
-                              textDecoration: 'underline',
-                              fontWeight: '500',
-                            },
-                            target: '_blank',
-                            rel: 'noopener noreferrer'
-                          }
-                        },
-                        strong: {
-                          props: {
-                            style: { 
-                              fontWeight: '600',
-                              color: msg.type === 'user' ? 'white' : '#000',
-                            }
-                          }
-                        },
-                        em: {
-                          props: {
-                            style: { 
-                              fontStyle: 'italic',
-                              color: msg.type === 'user' ? 'rgba(255,255,255,0.9)' : '#555',
-                            }
-                          }
-                        },
-                        blockquote: {
-                          props: {
-                            style: {
-                              borderLeft: msg.type === 'user' ? '3px solid rgba(255,255,255,0.5)' : '3px solid #dfe2e5',
-                              paddingLeft: '12px',
-                              margin: '12px 0',
-                              color: msg.type === 'user' ? 'rgba(255,255,255,0.9)' : '#6a737d',
-                              fontStyle: 'italic',
-                            }
-                          }
-                        },
-                        hr: {
-                          props: {
-                            style: {
-                              border: 'none',
-                              borderTop: msg.type === 'user' ? '1px solid rgba(255,255,255,0.3)' : '1px solid #e1e4e8',
-                              margin: '16px 0',
-                            }
-                          }
-                        },
-                        table: {
-                          props: {
-                            style: {
-                              borderCollapse: 'collapse',
-                              width: '100%',
-                              margin: '12px 0',
-                              fontSize: '0.9em',
-                            }
-                          }
-                        },
-                        th: {
-                          props: {
-                            style: {
-                              border: msg.type === 'user' ? '1px solid rgba(255,255,255,0.3)' : '1px solid #dfe2e5',
-                              padding: '8px',
-                              background: msg.type === 'user' ? 'rgba(0,0,0,0.2)' : '#f6f8fa',
-                              fontWeight: '600',
-                            }
-                          }
-                        },
-                        td: {
-                          props: {
-                            style: {
-                              border: msg.type === 'user' ? '1px solid rgba(255,255,255,0.3)' : '1px solid #dfe2e5',
-                              padding: '8px',
-                            }
-                          }
-                        },
-                      }
-                    }}
-                  >
-                    {msg.text}
-                  </Markdown>
-                </div>
-              </div>
-            ))}
-            {isTyping && (
-              <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '12px' }}>
-                <div
-                  style={{
-                    padding: '10px 14px',
-                    borderRadius: '12px',
-                    background: 'white',
-                    color: '#666',
-                    fontSize: '0.9rem',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                  }}
-                >
-                  <span>typing...</span>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* 入力エリア */}
-          <div
-            style={{
-              padding: isMobile ? '12px' : '16px',
-              borderTop: '1px solid #e0e0e0',
-              background: 'white',
-              display: 'flex',
-              gap: '8px',
-            }}
-          >
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={t.chatbotPlaceholder}
-              style={{
-                flex: 1,
-                padding: isMobile ? '8px 12px' : '10px 14px',
-                border: '1px solid #ddd',
-                borderRadius: '20px',
-                outline: 'none',
-                fontSize: isMobile ? '0.85rem' : '0.9rem',
-              }}
-            />
-            <button
-              onClick={handleSend}
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '50%',
-                width: isMobile ? '36px' : '40px',
-                height: isMobile ? '36px' : '40px',
-                cursor: 'pointer',
-                fontSize: isMobile ? '1.1rem' : '1.2rem',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexShrink: 0,
-              }}
-            >
-              ➤
-            </button>
-          </div>
-        </div>
-      )}
-    </>
+          ➤
+        </button>
+      </div>
+    </div>
   );
 };
 
