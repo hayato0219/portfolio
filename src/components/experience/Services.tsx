@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import type { Translations, YearData } from '@/types';
-import YearSection from './YearSection';
+import ExperienceItem from './ExperienceItem';
 import ImageModal from './ImageModal';
 
 interface ServicesProps {
@@ -13,27 +13,26 @@ interface ServicesProps {
 
 const Services: React.FC<ServicesProps> = ({ services, t }) => {
   const [isMounted, setIsMounted] = useState(false);
-
-  // Most recent year expanded by default; older ones collapsed.
-  const [expandedYears, setExpandedYears] = useState<Record<string, boolean>>(
-    () =>
-      Object.fromEntries(services.map((y, i) => [y.year, i === 0]))
-  );
-
-  const [modal, setModal] = useState<{ list: string[]; index: number } | null>(
-    null
-  );
+  const [modal, setModal] = useState<{
+    list: string[];
+    index: number;
+    caption: string;
+  } | null>(null);
   const [currentImageIndexes, setCurrentImageIndexes] = useState<
     Record<string, number>
   >({});
 
   useEffect(() => setIsMounted(true), []);
 
-  const toggleYear = (year: string) =>
-    setExpandedYears((prev) => ({ ...prev, [year]: !prev[year] }));
+  // Flat, chronology-agnostic list (leads with current work).
+  const items = services.flatMap((y) => y.items);
 
-  const openModal = (imageList: string[], currentIndex: number) => {
-    setModal({ list: imageList, index: currentIndex });
+  const openModal = (
+    imageList: string[],
+    currentIndex: number,
+    caption: string
+  ) => {
+    setModal({ list: imageList, index: currentIndex, caption });
     document.body.style.overflow = 'hidden';
   };
 
@@ -74,19 +73,23 @@ const Services: React.FC<ServicesProps> = ({ services, t }) => {
     <section id="experience">
       <h2 className="section-title">{t.experience}</h2>
 
-      {services.map((yearData) => (
-        <YearSection
-          key={yearData.year}
-          year={yearData.year}
-          items={yearData.items}
-          isExpanded={!!expandedYears[yearData.year]}
-          onToggle={() => toggleYear(yearData.year)}
-          currentImageIndexes={currentImageIndexes}
-          onImageNavigation={handleImageNavigation}
-          onImageClick={openModal}
-          t={t}
-        />
-      ))}
+      <div className="xp-list">
+        {items.map((item, index) => {
+          const itemKey = `xp-${index}`;
+          return (
+            <ExperienceItem
+              key={itemKey}
+              item={item}
+              currentImageIndex={currentImageIndexes[itemKey] || 0}
+              onImageNavigation={(direction, imageCount) =>
+                handleImageNavigation(itemKey, direction, imageCount)
+              }
+              onImageClick={openModal}
+              t={t}
+            />
+          );
+        })}
+      </div>
 
       {isMounted &&
         modal &&
@@ -94,6 +97,7 @@ const Services: React.FC<ServicesProps> = ({ services, t }) => {
           <ImageModal
             imageList={modal.list}
             currentIndex={modal.index}
+            caption={modal.caption}
             onClose={closeModal}
             onNavigate={navigateModal}
             onSelect={goToModalImage}

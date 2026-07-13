@@ -20,6 +20,9 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -30,6 +33,33 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
       setMessages([{ type: 'bot', text: t.chatbotWelcome }]);
     }
   }, [isOpen, t.chatbotWelcome, messages.length]);
+
+  // Focus management: focus input on open, return focus to the launcher on close.
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+      wasOpenRef.current = true;
+    } else if (wasOpenRef.current) {
+      fabRef.current?.focus();
+      wasOpenRef.current = false;
+    }
+  }, [isOpen]);
+
+  // Esc closes the window.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen]);
+
+  const resetConversation = () => {
+    setMessages([{ type: 'bot', text: t.chatbotWelcome }]);
+    setInputValue('');
+    inputRef.current?.focus();
+  };
 
   // Build a portfolio context string for the model.
   const buildSystemPrompt = () => {
@@ -77,8 +107,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
     }
   };
 
-  const handleSend = async () => {
-    const question = inputValue.trim();
+  const sendMessage = async (text: string) => {
+    const question = text.trim();
     if (!question || isTyping) return;
 
     setMessages((prev) => [...prev, { type: 'user', text: question }]);
@@ -90,6 +120,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
     setIsTyping(false);
   };
 
+  const handleSend = () => sendMessage(inputValue);
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -100,6 +132,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
   if (!isOpen) {
     return (
       <button
+        ref={fabRef}
         type="button"
         className="chat-fab"
         aria-label={t.chatbotTitle}
@@ -110,6 +143,9 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
     );
   }
 
+  const showSuggestions =
+    messages.length <= 1 && !isTyping && !!t.chatbotSuggestions?.length;
+
   return (
     <div
       className="chat-window"
@@ -118,14 +154,32 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
     >
       <div className="chat-header">
         <h3>{t.chatbotTitle}</h3>
-        <button
-          type="button"
-          className="chat-header__close"
-          aria-label="Close chat"
-          onClick={() => setIsOpen(false)}
-        >
-          ×
-        </button>
+        <div className="chat-header__actions">
+          {messages.length > 1 && (
+            <button
+              type="button"
+              className="chat-header__btn"
+              aria-label={t.chatbotReset || 'Reset'}
+              title={t.chatbotReset}
+              onClick={resetConversation}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+                <path d="M3 3v5h5" />
+              </svg>
+            </button>
+          )}
+          <button
+            type="button"
+            className="chat-header__btn"
+            aria-label="Close chat"
+            onClick={() => setIsOpen(false)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="chat-body">
@@ -158,11 +212,27 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
             </div>
           </div>
         )}
+
+        {showSuggestions && (
+          <div className="chat-suggestions">
+            {t.chatbotSuggestions!.map((s) => (
+              <button
+                key={s}
+                type="button"
+                className="chat-suggestion"
+                onClick={() => sendMessage(s)}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
 
       <div className="chat-input">
         <input
+          ref={inputRef}
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}

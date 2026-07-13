@@ -44,9 +44,23 @@ const Footer: React.FC<FooterProps> = ({ name, email, gitHub, t }) => {
           )}
         </div>
 
-        <p className="site-footer__credit">
-          {t.createdBy} {name}
-        </p>
+        <nav className="site-footer__nav" aria-label="Footer">
+          <a href="#home">{t.home}</a>
+          <a href="#about">{t.about}</a>
+          <a href="#footer">{t.contact}</a>
+        </nav>
+
+        <div className="site-footer__bottom">
+          <p className="site-footer__credit">
+            © {new Date().getFullYear()} {name} · Built with Next.js
+          </p>
+          <a href="#home" className="site-footer__top">
+            {t.backToTop || 'Back to top'}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+          </a>
+        </div>
       </div>
     </footer>
   );

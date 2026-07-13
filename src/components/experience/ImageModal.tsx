@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface ImageModalProps {
   imageList: string[];
   currentIndex: number;
+  caption?: string;
   onClose: () => void;
   onNavigate: (direction: 'next' | 'prev') => void;
   onSelect: (index: number) => void;
@@ -17,6 +18,7 @@ const isVideo = (filename: string) =>
 const ImageModal: React.FC<ImageModalProps> = ({
   imageList,
   currentIndex,
+  caption,
   onClose,
   onNavigate,
   onSelect,
@@ -25,16 +27,43 @@ const ImageModal: React.FC<ImageModalProps> = ({
   const currentName = imageList[currentIndex] ?? '';
   const imageSrc = `/images/${currentName}`;
   const currentIsVideo = isVideo(currentName);
+  const stageRef = useRef<HTMLDivElement>(null);
 
-  // Keyboard controls: Esc to close, arrows to navigate.
+  // Keyboard controls + focus management (trap + restore).
   useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    stageRef.current?.focus();
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      else if (hasMultipleImages && e.key === 'ArrowRight') onNavigate('next');
-      else if (hasMultipleImages && e.key === 'ArrowLeft') onNavigate('prev');
+      if (e.key === 'Escape') {
+        onClose();
+      } else if (hasMultipleImages && e.key === 'ArrowRight') {
+        onNavigate('next');
+      } else if (hasMultipleImages && e.key === 'ArrowLeft') {
+        onNavigate('prev');
+      } else if (e.key === 'Tab') {
+        // Trap focus within the modal.
+        const focusables = stageRef.current?.querySelectorAll<HTMLElement>(
+          'button, [href], video'
+        );
+        if (!focusables || focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
+
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      previouslyFocused?.focus?.();
+    };
   }, [hasMultipleImages, onClose, onNavigate]);
 
   return (
@@ -42,10 +71,15 @@ const ImageModal: React.FC<ImageModalProps> = ({
       className="modal"
       role="dialog"
       aria-modal="true"
-      aria-label="Media viewer"
+      aria-label={caption || 'Media viewer'}
       onClick={onClose}
     >
-      <div className="modal__stage" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal__stage"
+        ref={stageRef}
+        tabIndex={-1}
+        onClick={(e) => e.stopPropagation()}
+      >
         {hasMultipleImages && (
           <button
             type="button"
@@ -61,7 +95,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
           <video className="modal__media" src={imageSrc} controls autoPlay />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
-          <img className="modal__media" src={imageSrc} alt="Expanded view" />
+          <img className="modal__media" src={imageSrc} alt={caption || 'Expanded view'} />
         )}
 
         {hasMultipleImages && (
@@ -83,6 +117,17 @@ const ImageModal: React.FC<ImageModalProps> = ({
         >
           ✕
         </button>
+
+        {(caption || hasMultipleImages) && (
+          <div className="modal__meta">
+            {caption && <span className="modal__caption">{caption}</span>}
+            {hasMultipleImages && (
+              <span className="modal__counter">
+                {currentIndex + 1} / {imageList.length}
+              </span>
+            )}
+          </div>
+        )}
 
         {hasMultipleImages && (
           <div className="modal__dots">

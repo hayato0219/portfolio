@@ -7,6 +7,13 @@ export interface SiteProps {
   };
 }
 
+export type ProjectLinkType = 'demo' | 'repo' | 'paper' | 'link';
+
+export interface ProjectLink {
+  type: ProjectLinkType;
+  url: string;
+}
+
 export interface ExperienceItem {
   title: string;
   description: string;
@@ -14,6 +21,7 @@ export interface ExperienceItem {
   technologies?: string[];
   tags?: string;
   images?: string[];
+  links?: ProjectLink[];
 }
 
 export interface YearData {
@@ -38,6 +46,10 @@ export interface Translations {
   tools: string;
   technologiesLabel: string;
   achievementsLabel: string;
+  linkDemo?: string;
+  linkRepo?: string;
+  linkPaper?: string;
+  linkOpen?: string;
 
   // Content
   aboutDescription: string;
@@ -50,6 +62,8 @@ export interface Translations {
   chatbotWelcome: string;
   chatbotPlaceholder: string;
   chatbotSend: string;
+  chatbotSuggestions?: string[];
+  chatbotReset?: string;
 
   // Footer
   contactTitle: string;
@@ -57,6 +71,7 @@ export interface Translations {
   github: string;
   createdBy: string;
   creatorName: string;
+  backToTop?: string;
 
   // Language toggle
   switchToJapanese: string;

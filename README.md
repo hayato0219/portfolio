@@ -46,6 +46,11 @@ GEMINI_API_KEY=your_gemini_api_key_here
 
 # Optional — Gemini model to use (defaults to gemini-2.5-flash)
 GEMINI_MODEL=gemini-2.5-flash
+
+# Optional — canonical site URL for OpenGraph/Twitter tags.
+# On Vercel this is derived automatically from VERCEL_PROJECT_PRODUCTION_URL;
+# set this only to override (e.g. a custom domain).
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
 ```
 
 > Note: `GEMINI_API_KEY` replaces the previous `NEXT_PUBLIC_GEMINI_API_KEY`, which
