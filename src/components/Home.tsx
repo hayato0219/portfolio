@@ -44,21 +44,19 @@ const HERO_TECH: { Icon: React.ComponentType; name: string; color: string }[] = 
   { Icon: SiGithub, name: 'GitHub', color: '#181717' },
 ];
 
-// Colored tech icons roaming the hero background — deterministic start positions
-// (SSR-safe); each travels a long looping path so they wander all over.
-const BG_ICONS = Array.from({ length: 30 }, (_, i) => {
-  const { Icon, color } = HERO_TECH[i % HERO_TECH.length];
-  return {
-    Icon,
-    color,
-    left: (i * 29 + 7) % 95,
-    top: (i * 47 + 6) % 88,
-    size: 26 + (i % 4) * 8,
-    duration: 24 + (i % 7) * 3,
-    delay: -((i * 3.1) % 20),
-    roam: (i % 6) + 1,
-  };
-});
+// Colored tech icons roaming the hero background — each logo appears exactly once
+// (no duplicates). Deterministic start positions (SSR-safe); each travels a long
+// looping path so they wander all over.
+const BG_ICONS = HERO_TECH.map(({ Icon, color }, i) => ({
+  Icon,
+  color,
+  left: (i * 29 + 7) % 95,
+  top: (i * 47 + 6) % 88,
+  size: 26 + (i % 4) * 8,
+  duration: 24 + (i % 7) * 3,
+  delay: -((i * 3.1) % 20),
+  roam: (i % 6) + 1,
+}));
 
 const Home: React.FC<HomeProps> = ({ siteProps, t }) => {
   return (
