@@ -1,11 +1,11 @@
 export default function NotFound() {
   return (
-    <div className="notfound">
-      <h1 className="notfound__code">404</h1>
-      <p className="notfound__msg">Page Not Found</p>
+    <main className="container notfound">
+      <p className="notfound__code">404</p>
+      <h1 className="notfound__msg">Page not found.</h1>
       <a href="/" className="btn">
-        Go Home
+        Go home
       </a>
-    </div>
+    </main>
   );
 }

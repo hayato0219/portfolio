@@ -13,69 +13,25 @@ export default function OpengraphImage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '90px',
-          background: 'linear-gradient(135deg, #0b0b0f 0%, #1a1633 60%, #241a4d 100%)',
-          color: '#ffffff',
+          justifyContent: 'space-between',
+          padding: '88px',
+          background: '#fafaf9',
+          color: '#151514',
           fontFamily: 'sans-serif',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '20px',
-            marginBottom: '40px',
-          }}
-        >
-          <div
-            style={{
-              width: '72px',
-              height: '72px',
-              borderRadius: '18px',
-              background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '36px',
-              fontWeight: 700,
-            }}
-          >
-            HS
+        <div style={{ fontSize: '26px', color: '#6e6b66', letterSpacing: '1px' }}>
+          Portfolio
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ fontSize: '96px', fontWeight: 700, letterSpacing: '-3px' }}>
+            Hayato Seki
           </div>
-          <div style={{ fontSize: '26px', color: '#a5b4fc', fontWeight: 600 }}>
-            Portfolio
+          <div style={{ fontSize: '34px', color: '#52504c', marginTop: '16px' }}>
+            Graduate student in Informatics, building web apps.
           </div>
         </div>
-        <div style={{ fontSize: '76px', fontWeight: 800, letterSpacing: '-2px' }}>
-          Hayato Seki
-        </div>
-        <div style={{ fontSize: '34px', color: '#c7c7d1', marginTop: '20px' }}>
-          Graduate Student · Informatics
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            gap: '14px',
-            marginTop: '46px',
-          }}
-        >
-          {['Next.js', 'TypeScript', 'AI Coding'].map((tag) => (
-            <div
-              key={tag}
-              style={{
-                fontSize: '26px',
-                fontWeight: 600,
-                color: '#c7d2fe',
-                padding: '10px 24px',
-                borderRadius: '999px',
-                border: '1px solid rgba(165,180,252,0.4)',
-              }}
-            >
-              {tag}
-            </div>
-          ))}
-        </div>
+        <div style={{ display: 'flex', height: '2px', width: '120px', background: '#151514' }} />
       </div>
     ),
     { ...size }

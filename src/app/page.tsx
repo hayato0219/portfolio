@@ -47,7 +47,7 @@ export default function Page() {
   return (
     <>
       <a href="#home" className="skip-link">
-        {language === 'ja' ? 'メインコンテンツへ' : 'Skip to content'}
+        {t.skipToContent}
       </a>
       <Header t={t} language={language} changeLanguage={changeLanguage} />
       <main>

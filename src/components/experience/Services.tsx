@@ -70,10 +70,8 @@ const Services: React.FC<ServicesProps> = ({ services, t }) => {
     });
 
   return (
-    <section id="experience">
-      <h2 className="section-title">{t.experience}</h2>
-
-      <div className="xp-list">
+    <>
+      <div>
         {items.map((item, index) => {
           const itemKey = `xp-${index}`;
           return (
@@ -104,7 +102,7 @@ const Services: React.FC<ServicesProps> = ({ services, t }) => {
           />,
           document.body
         )}
-    </section>
+    </>
   );
 };
 

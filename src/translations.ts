@@ -2,52 +2,41 @@ import type { TranslationsObject } from './types';
 
 export const translations: TranslationsObject = {
   en: {
-    // Header
-    home: "Home",
+    // Header / nav
     about: "About",
+    projects: "Projects",
+    skills: "Skills",
     contact: "Contact",
 
-    // Home/Intro
-    greeting: "Hi there!\nI'm Hayato Seki!",
-    heroTagline: "Informatics grad student at Osaka Metropolitan University. I like building web apps.",
+    // Hero
+    heroTitle: "A graduate student in Informatics, building web apps for research and part-time work.",
+    heroAffiliation: "Osaka Metropolitan University · Informatics",
+    heroCta: "Get in touch",
 
-    // Sections
-    aboutMe: "About Me",
-    skillSet: "Skill Set",
-    experience: "Projects",
-    tools: "Tools",
-    technologiesLabel: "Technologies",
-    achievementsLabel: "Achievements",
+    // Section titles & labels
+    aboutMe: "About",
+    technologiesLabel: "Stack",
+    achievementsLabel: "Highlights",
+    enlargeMedia: "View larger",
     linkDemo: "Demo",
     linkRepo: "Code",
     linkPaper: "Paper",
     linkOpen: "Link",
 
-    // Footer
+    // Contact / footer
     contactTitle: "Contact",
-    email: "Email",
-    github: "GitHub",
-    createdBy: "Created by",
-    creatorName: "Hayato Seki",
+    contactLead: "Feel free to reach out — about work, research, or anything else.",
     backToTop: "Back to top",
-
-    // Language toggle
-    switchToJapanese: "Japanese",
-    switchToEnglish: "English",
+    skipToContent: "Skip to content",
 
     // About content
     aboutDescription: "I'm a graduate student in Informatics at Osaka Metropolitan University. These days I build web apps, making good use of AI along the way. I enjoy trying out new technologies and turning ideas into things that actually work. Outside of coding, I like variety shows (mainly Chidori's programs), anime, manga, and working out.",
 
     // Skills
-    skills: [
-      "Next.js",
-      "TypeScript",
-      "Python",
-      "Angular",
-      "NestJS",
-      "MongoDB",
-      "Firebase",
-      "Vercel",
+    skillGroups: [
+      { title: "Frontend", items: ["Next.js", "TypeScript", "Angular"] },
+      { title: "Backend / Data", items: ["NestJS", "Python", "MongoDB", "Firebase"] },
+      { title: "Tools", items: ["Vercel", "Git & GitHub", "Visual Studio Code"] },
     ],
 
     // Experience/Services
@@ -79,14 +68,11 @@ export const translations: TranslationsObject = {
       }
     ],
 
-    // Tools list
-    toolsList: [
-      "Git & GitHub",
-      "Visual Studio Code"
-    ],
 
     // Chatbot
+    chatbotLauncher: "Ask AI",
     chatbotTitle: "Ask me anything",
+    chatbotClose: "Close chat",
     chatbotPlaceholder: "Ask about my skills, experience, or projects...",
     chatbotSend: "Send",
     chatbotWelcome: "Hi! Feel free to ask me about my experience, skills, or projects.",
@@ -99,52 +85,41 @@ export const translations: TranslationsObject = {
     chatbotReset: "Reset conversation",
   },
   ja: {
-    // Header
-    home: "ホーム",
+    // Header / nav
     about: "自己紹介",
+    projects: "プロジェクト",
+    skills: "スキル",
     contact: "連絡先",
 
-    // Home/Intro
-    greeting: "こんにちは！\n関勇人（せきはやと）です！",
-    heroTagline: "情報学専攻の大学院生です。\n研究やアルバイトでWebアプリを作っています。",
+    // Hero
+    heroTitle: "研究とアルバイトで、Webアプリを作っている情報学専攻の大学院生です。",
+    heroAffiliation: "大阪公立大学 · 情報学専攻",
+    heroCta: "連絡する",
 
-    // Sections
+    // Section titles & labels
     aboutMe: "自己紹介",
-    skillSet: "スキルセット",
-    experience: "プロジェクト",
-    tools: "ツール",
     technologiesLabel: "使用技術",
     achievementsLabel: "成果・特記事項",
+    enlargeMedia: "拡大表示",
     linkDemo: "デモ",
     linkRepo: "コード",
     linkPaper: "論文",
     linkOpen: "リンク",
 
-    // Footer
+    // Contact / footer
     contactTitle: "連絡先",
-    email: "メール",
-    github: "GitHub",
-    createdBy: "作成者",
-    creatorName: "関勇人",
+    contactLead: "お仕事や研究のご相談など、お気軽にご連絡ください。",
     backToTop: "トップへ戻る",
-
-    // Language toggle
-    switchToJapanese: "日本語",
-    switchToEnglish: "英語",
+    skipToContent: "メインコンテンツへ",
 
     // About content
     aboutDescription: "大阪公立大学で情報学を専攻している大学院生です。普段はAIも活用しながらWebアプリを作っています。新しい技術を触って、実際に動くものを形にするのが好きです。コーディング以外では、バラエティ番組（主に千鳥の番組）やアニメ、漫画を見たり、筋トレをするのが好きです。",
 
     // Skills
-    skills: [
-      "Next.js",
-      "TypeScript",
-      "Python",
-      "Angular",
-      "NestJS",
-      "MongoDB",
-      "Firebase",
-      "Vercel",
+    skillGroups: [
+      { title: "Frontend", items: ["Next.js", "TypeScript", "Angular"] },
+      { title: "Backend / Data", items: ["NestJS", "Python", "MongoDB", "Firebase"] },
+      { title: "Tools", items: ["Vercel", "Git & GitHub", "Visual Studio Code"] },
     ],
 
     // Experience/Services
@@ -176,14 +151,11 @@ export const translations: TranslationsObject = {
       }
     ],
 
-    // Tools list
-    toolsList: [
-      "Git & GitHub",
-      "Visual Studio Code"
-    ],
 
     // Chatbot
+    chatbotLauncher: "AIに質問",
     chatbotTitle: "何でも聞いてください",
+    chatbotClose: "チャットを閉じる",
     chatbotPlaceholder: "スキル、経験、プロジェクトについて質問してください...",
     chatbotSend: "送信",
     chatbotWelcome: "こんにちは！私の経験やスキル、プロジェクトについて何でもお聞きください。",

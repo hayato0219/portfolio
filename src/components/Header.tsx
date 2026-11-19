@@ -10,13 +10,20 @@ interface HeaderProps {
 }
 
 const NAV_ITEMS = [
-  { id: 'home', key: 'home' as const },
   { id: 'about', key: 'about' as const },
-  { id: 'footer', key: 'contact' as const },
+  { id: 'projects', key: 'projects' as const },
+  { id: 'skills', key: 'skills' as const },
+  { id: 'contact', key: 'contact' as const },
+];
+
+const LANGS = [
+  { value: 'ja' as const, label: 'JA', name: '日本語' },
+  { value: 'en' as const, label: 'EN', name: 'English' },
 ];
 
 const Header: React.FC<HeaderProps> = ({ t, language, changeLanguage }) => {
-  const [activeId, setActiveId] = useState('home');
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
 
   // Scroll-spy: highlight the nav link for the section currently in view.
   useEffect(() => {
@@ -38,11 +45,18 @@ const Header: React.FC<HeaderProps> = ({ t, language, changeLanguage }) => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className={`site-header${scrolled ? ' site-header--scrolled' : ''}`}>
       <div className="container site-header__inner">
         <a href="#home" className="brand">
-          Hayato Seki<span className="brand__dot">.</span>
+          Hayato Seki
         </a>
 
         <nav className="nav" aria-label="Primary">
@@ -58,15 +72,23 @@ const Header: React.FC<HeaderProps> = ({ t, language, changeLanguage }) => {
               {t[item.key]}
             </a>
           ))}
-          <select
-            className="lang-switch"
-            value={language}
-            onChange={(e) => changeLanguage(e.target.value as 'en' | 'ja')}
-            aria-label="Language"
-          >
-            <option value="ja">日本語</option>
-            <option value="en">English</option>
-          </select>
+          <div className="lang" role="group" aria-label="Language">
+            {LANGS.map((lang, i) => (
+              <React.Fragment key={lang.value}>
+                {i > 0 && <span aria-hidden="true">/</span>}
+                <button
+                  type="button"
+                  className="lang__btn"
+                  lang={lang.value}
+                  aria-label={lang.name}
+                  aria-pressed={language === lang.value}
+                  onClick={() => changeLanguage(lang.value)}
+                >
+                  {lang.label}
+                </button>
+              </React.Fragment>
+            ))}
+          </div>
         </nav>
       </div>
     </header>

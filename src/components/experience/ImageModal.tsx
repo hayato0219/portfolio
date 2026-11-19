@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { ChevronLeft, ChevronRight, Close } from '../icons';
 
 interface ImageModalProps {
   imageList: string[];
@@ -87,7 +88,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
             aria-label="Previous"
             onClick={() => onNavigate('prev')}
           >
-            ‹
+            <ChevronLeft />
           </button>
         )}
 
@@ -105,7 +106,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
             aria-label="Next"
             onClick={() => onNavigate('next')}
           >
-            ›
+            <ChevronRight />
           </button>
         )}
 
@@ -115,7 +116,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
           aria-label="Close"
           onClick={onClose}
         >
-          ✕
+          <Close />
         </button>
 
         {(caption || hasMultipleImages) && (

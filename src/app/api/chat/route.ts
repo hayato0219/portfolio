@@ -46,8 +46,10 @@ function clientIp(request: Request): string {
 function buildSystemPrompt(t: Translations): string {
   let context = `Portfolio Information about ${siteProps.name}:\n\n`;
   context += `About: ${t.aboutDescription}\n\n`;
-  context += `Skills: ${t.skills.join(', ')}\n\n`;
-  context += `Tools: ${t.toolsList.join(', ')}\n\n`;
+  t.skillGroups.forEach((group) => {
+    context += `${group.title}: ${group.items.join(', ')}\n`;
+  });
+  context += `\n`;
   context += `Experience:\n`;
   t.experienceList.forEach((yearData) => {
     context += `${yearData.year}:\n`;

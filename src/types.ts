@@ -29,23 +29,28 @@ export interface YearData {
   items: ExperienceItem[];
 }
 
+export interface SkillGroup {
+  title: string;
+  items: string[];
+}
+
 export interface Translations {
-  // Header
-  home: string;
+  // Header / nav
   about: string;
+  projects: string;
+  skills: string;
   contact: string;
 
-  // Home / intro
-  greeting: string;
-  heroTagline?: string;
+  // Hero
+  heroTitle: string;
+  heroAffiliation: string;
+  heroCta: string;
 
-  // Sections
+  // Section titles & labels
   aboutMe: string;
-  skillSet: string;
-  experience: string;
-  tools: string;
   technologiesLabel: string;
   achievementsLabel: string;
+  enlargeMedia: string;
   linkDemo?: string;
   linkRepo?: string;
   linkPaper?: string;
@@ -53,29 +58,24 @@ export interface Translations {
 
   // Content
   aboutDescription: string;
-  skills: string[];
+  skillGroups: SkillGroup[];
   experienceList: YearData[];
-  toolsList: string[];
 
   // Chatbot
+  chatbotLauncher: string;
   chatbotTitle: string;
   chatbotWelcome: string;
   chatbotPlaceholder: string;
   chatbotSend: string;
+  chatbotClose: string;
   chatbotSuggestions?: string[];
   chatbotReset?: string;
 
-  // Footer
+  // Contact / footer
   contactTitle: string;
-  email: string;
-  github: string;
-  createdBy: string;
-  creatorName: string;
+  contactLead: string;
   backToTop?: string;
-
-  // Language toggle
-  switchToJapanese: string;
-  switchToEnglish: string;
+  skipToContent: string;
 }
 
 export interface TranslationsObject {
