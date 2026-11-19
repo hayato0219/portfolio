@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import type { Translations, YearData } from '@/types';
-import ExperienceItem from './ExperienceItem';
+import ProjectIndex from './ProjectIndex';
 import ImageModal from './ImageModal';
 
 interface ServicesProps {
@@ -71,23 +71,13 @@ const Services: React.FC<ServicesProps> = ({ services, t }) => {
 
   return (
     <>
-      <div>
-        {items.map((item, index) => {
-          const itemKey = `xp-${index}`;
-          return (
-            <ExperienceItem
-              key={itemKey}
-              item={item}
-              currentImageIndex={currentImageIndexes[itemKey] || 0}
-              onImageNavigation={(direction, imageCount) =>
-                handleImageNavigation(itemKey, direction, imageCount)
-              }
-              onImageClick={openModal}
-              t={t}
-            />
-          );
-        })}
-      </div>
+      <ProjectIndex
+        items={items}
+        t={t}
+        currentImageIndexes={currentImageIndexes}
+        onImageNavigation={handleImageNavigation}
+        onImageClick={openModal}
+      />
 
       {isMounted &&
         modal &&

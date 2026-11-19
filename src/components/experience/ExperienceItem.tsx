@@ -19,10 +19,12 @@ interface ExperienceItemProps {
     caption: string
   ) => void;
   t: Translations;
+  /** The project index already shows the title and period in its row. */
+  showHead?: boolean;
 }
 
-const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.ogg', '.mov'];
-const isVideo = (filename: string) =>
+export const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.ogg', '.mov'];
+export const isVideo = (filename: string) =>
   VIDEO_EXTENSIONS.some((ext) => filename.toLowerCase().endsWith(ext));
 
 const ExperienceItem: React.FC<ExperienceItemProps> = ({
@@ -31,6 +33,7 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
   onImageNavigation,
   onImageClick,
   t,
+  showHead = true,
 }) => {
   const images = item.images ?? [];
   const hasImages = images.length > 0;
@@ -92,10 +95,12 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
         </div>
       )}
 
-      <div className="project__head">
-        <h3 className="project__title">{item.title}</h3>
-        {item.date && <span className="mono-label">{item.date}</span>}
-      </div>
+      {showHead && (
+        <div className="project__head">
+          <h3 className="project__title">{item.title}</h3>
+          {item.date && <span className="mono-label">{item.date}</span>}
+        </div>
+      )}
 
       {item.description && (
         <p className="project__desc jp-text">{item.description}</p>

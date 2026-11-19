@@ -52,6 +52,7 @@ export interface Translations {
   technologiesLabel: string;
   achievementsLabel: string;
   enlargeMedia: string;
+  projectsShowAll: string;
   linkDemo?: string;
   linkRepo?: string;
   linkPaper?: string;
