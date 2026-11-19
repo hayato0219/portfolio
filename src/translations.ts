@@ -78,10 +78,9 @@ export const translations: TranslationsObject = {
         items: [
           {
             title: "StudyOS (personal project)",
-            description: "A personal learning system that decides what to study next from my study history, asks a question, grades the answer, and lets the result change tomorrow's questions. Which concept, format and difficulty to ask is decided deterministically by code; the LLM only writes the question and checks the answer against a hidden checklist generated with it, and the score itself is computed in code. So the same state always gives the same recommendation, and the app can explain why each question came up. Retention (FSRS) and understanding are tracked as separate axes. Runs on Cloudflare's free plan.",
+            description: "A personal app for learning English expressions and software engineering a little every day. For English, I record what I wanted to say in Japanese by voice or text, AI suggests natural English for each situation, and I review it with spaced repetition. For software engineering, I answer short written questions from a curriculum of 208 topics across 11 areas such as databases and networking, and AI grades them. It runs from my phone's home screen with a daily reminder.",
             date: "Development Period: 2026/09 -",
-            technologies: ["TypeScript", "React (Vite)", "Hono", "Cloudflare Workers / D1 / KV / R2", "Gemini API", "Zod", "Vitest"],
-            tags: "250 unit and property tests plus 48 integration tests against a real D1 database\nProperty tests guarantee that every session terminates and every committed curriculum is acyclic\nGrading stability measured against a fixed golden set whenever a prompt, rubric or model changes",
+            technologies: ["TypeScript", "React", "Hono", "Cloudflare Workers", "Gemini API"],
           },
         ],
       },
@@ -193,10 +192,9 @@ export const translations: TranslationsObject = {
         items: [
           {
             title: "StudyOS（個人開発）",
-            description: "学習履歴をもとに「次に何を学ぶか」を決め、問題を出して採点し、その結果で翌日の出題を変える個人用の学習システムです。出題する概念・形式・難易度はプログラムが決定的に決め、AIは問題文の作成と、問題と同時に作る非公開のチェックリストとの照合だけを担当します。点数もコードで計算するため、同じ状態なら必ず同じ推薦になり、なぜその問題が出たのかを画面で説明できます。記憶の定着（FSRS）と理解度は別の軸として管理しています。Cloudflareの無料プランで動かしています。",
+            description: "英語の言い回しとソフトウェアエンジニアリングの知識を、毎日少しずつ学ぶための自分用の学習アプリです。英語は、言いたかった日本語を声やテキストで記録するとAIが場面に合った英語を返し、それを間隔を空けて復習します。ソフトウェアエンジニアリングは、データベースやネットワークなど11分野・208項目のカリキュラムに沿って記述式の問題に答え、AIが採点します。スマホのホーム画面から使えて、毎日リマインダーが届きます。",
             date: "開発期間: 2026/09 -",
-            technologies: ["TypeScript", "React (Vite)", "Hono", "Cloudflare Workers / D1 / KV / R2", "Gemini API", "Zod", "Vitest"],
-            tags: "単体・プロパティテスト250件と、実際のD1データベースを使う統合テスト48件\nセッションが必ず終わること・カリキュラムが循環しないことをプロパティテストで保証\nプロンプト・採点基準・モデルを変えるたびに、固定の評価セットで採点の安定性を測定",
+            technologies: ["TypeScript", "React", "Hono", "Cloudflare Workers", "Gemini API"],
           },
         ],
       },
