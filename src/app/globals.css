@@ -496,7 +496,7 @@ button.text-link {
    Hero
    ============================================================ */
 .hero {
-  padding: calc(var(--header-h) + var(--s-10)) 0 var(--s-9);
+  padding: calc(var(--header-h) + var(--s-8)) 0 var(--s-9);
 }
 
 .hero__meta {
@@ -545,7 +545,7 @@ button.text-link {
 
 @media (max-width: 760px) {
   .hero {
-    padding: calc(var(--header-h) + var(--s-8)) 0 var(--s-8);
+    padding: calc(var(--header-h) + 2.5rem) 0 var(--s-8);
   }
 }
 
@@ -1491,6 +1491,53 @@ button.text-link {
 .chat-md td {
   padding: 0.35em 0.5em;
   border: 1px solid var(--border);
+}
+
+/* ============================================================
+   Language switch (View Transitions)
+   Text blocks slide up and out, the new language slides in from below,
+   and any change in position/size between languages morphs smoothly.
+   ============================================================ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-group(*.lm) {
+  animation-duration: 0.5s;
+  animation-timing-function: var(--ease);
+}
+
+/* Keep snapshots at their natural size so text never stretches while the box morphs. */
+::view-transition-old(*.lm),
+::view-transition-new(*.lm) {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  object-position: left top;
+  overflow: clip;
+}
+
+::view-transition-old(*.lm) {
+  animation: lm-out 0.26s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(*.lm) {
+  animation: lm-in 0.5s var(--ease) both;
+}
+
+@keyframes lm-out {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes lm-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 }
 
 /* ============================================================
