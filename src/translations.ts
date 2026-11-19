@@ -53,9 +53,10 @@ export const translations: TranslationsObject = {
 
     // Skills
     skillGroups: [
-      { title: "Frontend", items: ["Next.js", "TypeScript", "Angular"] },
-      { title: "Backend / Data", items: ["NestJS", "Python", "MongoDB", "Firebase"] },
-      { title: "Tools", items: ["Vercel", "Git & GitHub", "Visual Studio Code"] },
+      { title: "Frontend", items: ["Next.js", "React", "TypeScript", "Angular"] },
+      { title: "Backend / Data", items: ["NestJS", "Hono", "Go", "Python (Flask)", "MongoDB", "Firebase"] },
+      { title: "Cloud / AI", items: ["Vercel", "Cloudflare Workers", "Google Cloud", "Gemini API", "OpenAI API", "Azure Speech"] },
+      { title: "Tools / Testing", items: ["Git & GitHub", "Vitest", "Playwright", "Visual Studio Code"] },
     ],
 
     // Experience/Services
@@ -71,6 +72,18 @@ export const translations: TranslationsObject = {
             images: ["currentResearch.png", "currentResearch-ImageGeneration.mp4", "currentResearch-ImageEdit.mp4","currentResearch-PronunciationAssessment.mp4"]
           }
         ]
+      },
+      {
+        year: "2026",
+        items: [
+          {
+            title: "StudyOS (personal project)",
+            description: "A personal learning system that decides what to study next from my study history, asks a question, grades the answer, and lets the result change tomorrow's questions. Which concept, format and difficulty to ask is decided deterministically by code; the LLM only writes the question and checks the answer against a hidden checklist generated with it, and the score itself is computed in code. So the same state always gives the same recommendation, and the app can explain why each question came up. Retention (FSRS) and understanding are tracked as separate axes. Runs on Cloudflare's free plan.",
+            date: "Development Period: 2026/09 -",
+            technologies: ["TypeScript", "React (Vite)", "Hono", "Cloudflare Workers / D1 / KV / R2", "Gemini API", "Zod", "Vitest"],
+            tags: "250 unit and property tests plus 48 integration tests against a real D1 database\nProperty tests guarantee that every session terminates and every committed curriculum is acyclic\nGrading stability measured against a fixed golden set whenever a prompt, rubric or model changes",
+          },
+        ],
       },
       {
         year: "2024",
@@ -155,9 +168,10 @@ export const translations: TranslationsObject = {
 
     // Skills
     skillGroups: [
-      { title: "Frontend", items: ["Next.js", "TypeScript", "Angular"] },
-      { title: "Backend / Data", items: ["NestJS", "Python", "MongoDB", "Firebase"] },
-      { title: "Tools", items: ["Vercel", "Git & GitHub", "Visual Studio Code"] },
+      { title: "Frontend", items: ["Next.js", "React", "TypeScript", "Angular"] },
+      { title: "Backend / Data", items: ["NestJS", "Hono", "Go", "Python (Flask)", "MongoDB", "Firebase"] },
+      { title: "Cloud / AI", items: ["Vercel", "Cloudflare Workers", "Google Cloud", "Gemini API", "OpenAI API", "Azure Speech"] },
+      { title: "Tools / Testing", items: ["Git & GitHub", "Vitest", "Playwright", "Visual Studio Code"] },
     ],
 
     // Experience/Services
@@ -173,6 +187,18 @@ export const translations: TranslationsObject = {
             images: ["currentResearch.png", "currentResearch-ImageGeneration.mp4", "currentResearch-ImageEdit.mp4", "currentResearch-PronunciationAssessment.mp4"]
           }
         ]
+      },
+      {
+        year: "2026",
+        items: [
+          {
+            title: "StudyOS（個人開発）",
+            description: "学習履歴をもとに「次に何を学ぶか」を決め、問題を出して採点し、その結果で翌日の出題を変える個人用の学習システムです。出題する概念・形式・難易度はプログラムが決定的に決め、AIは問題文の作成と、問題と同時に作る非公開のチェックリストとの照合だけを担当します。点数もコードで計算するため、同じ状態なら必ず同じ推薦になり、なぜその問題が出たのかを画面で説明できます。記憶の定着（FSRS）と理解度は別の軸として管理しています。Cloudflareの無料プランで動かしています。",
+            date: "開発期間: 2026/09 -",
+            technologies: ["TypeScript", "React (Vite)", "Hono", "Cloudflare Workers / D1 / KV / R2", "Gemini API", "Zod", "Vitest"],
+            tags: "単体・プロパティテスト250件と、実際のD1データベースを使う統合テスト48件\nセッションが必ず終わること・カリキュラムが循環しないことをプロパティテストで保証\nプロンプト・採点基準・モデルを変えるたびに、固定の評価セットで採点の安定性を測定",
+          },
+        ],
       },
       {
         year: "2024",
