@@ -3,13 +3,17 @@ import type { SiteProps, Translations } from '@/types';
 import Section from './Section';
 import { Services } from './experience';
 import { ArrowUpRight } from './icons';
+import HeroAsk from './HeroAsk';
+import type { ChatState } from '@/hooks/useChat';
 
 interface HomeProps {
   siteProps: SiteProps;
   t: Translations;
+  chat: ChatState;
+  onContinueChat: () => void;
 }
 
-const Home: React.FC<HomeProps> = ({ siteProps, t }) => {
+const Home: React.FC<HomeProps> = ({ siteProps, t, chat, onContinueChat }) => {
   return (
     <>
       <section id="home" className="hero">
@@ -30,6 +34,8 @@ const Home: React.FC<HomeProps> = ({ siteProps, t }) => {
           </div>
 
           <h1 className="hero__title jp-text">{t.heroTitle}</h1>
+
+          <HeroAsk t={t} chat={chat} onContinue={onContinueChat} />
 
           <div className="hero__actions">
             <a href="#contact" className="btn">

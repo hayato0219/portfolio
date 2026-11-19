@@ -55,9 +55,12 @@ const Header: React.FC<HeaderProps> = ({ t, language, changeLanguage }) => {
   return (
     <header className={`site-header${scrolled ? ' site-header--scrolled' : ''}`}>
       <div className="container site-header__inner">
-        <a href="#home" className="brand">
-          Hayato Seki
-        </a>
+        <div className="site-header__left">
+          <a href="#home" className="brand">
+            Hayato Seki
+          </a>
+          <Status city={t.statusCity} now={t.statusNow} />
+        </div>
 
         <nav className="nav" aria-label="Primary">
           {NAV_ITEMS.map((item) => (
@@ -92,6 +95,37 @@ const Header: React.FC<HeaderProps> = ({ t, language, changeLanguage }) => {
         </nav>
       </div>
     </header>
+  );
+};
+
+const timeFormat = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Asia/Tokyo',
+  hour: '2-digit',
+  minute: '2-digit',
+});
+
+/** "Osaka 10:12 · <what I'm up to>" — the clock renders only after mount (no SSR mismatch). */
+const Status: React.FC<{ city: string; now: string }> = ({ city, now }) => {
+  const [time, setTime] = useState<string | null>(null);
+
+  useEffect(() => {
+    const update = () => setTime(timeFormat.format(new Date()));
+    update();
+    const id = setInterval(update, 15_000);
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <p className="status">
+      <span className="status__dot" aria-hidden="true" />
+      <span>
+        {city} <time className="status__time">{time ?? '--:--'}</time>
+      </span>
+      <span className="status__sep" aria-hidden="true">
+        ·
+      </span>
+      <span className="status__now">{now}</span>
+    </p>
   );
 };
 

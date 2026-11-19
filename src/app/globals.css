@@ -298,6 +298,13 @@ button {
   transition: color 0.2s var(--ease), text-decoration-color 0.2s var(--ease);
 }
 
+button.text-link {
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .text-link:hover {
   color: var(--accent);
   text-decoration-color: currentColor;
@@ -335,6 +342,80 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: var(--s-4);
+}
+
+.site-header__left {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  min-width: 0;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+  white-space: nowrap;
+}
+
+.status__dot {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #22a35a;
+}
+
+.status__dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: status-pulse 2.4s var(--ease) infinite;
+}
+
+@keyframes status-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+.status__time {
+  font-variant-numeric: tabular-nums;
+}
+
+.status__sep {
+  color: var(--border-strong);
+}
+
+.status__now {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 960px) {
+  .status__sep,
+  .status__now {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .status {
+    display: none;
+  }
 }
 
 .brand {
@@ -468,6 +549,156 @@ button {
   }
 }
 
+/* Hero prompt: ask the portfolio directly */
+.ask {
+  max-width: 640px;
+  margin-top: var(--s-7);
+}
+
+.ask__field {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  height: 56px;
+  padding: 0 var(--s-2) 0 var(--s-4);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  cursor: text;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.ask__field:focus-within {
+  border-color: var(--text);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--text) 6%, transparent);
+}
+
+.ask__prompt {
+  font-family: var(--font-mono);
+  font-size: var(--fs-lg);
+  color: var(--text-subtle);
+  line-height: 1;
+}
+
+.ask__field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-md);
+}
+
+.ask__field input::placeholder {
+  color: var(--text-subtle);
+  opacity: 1;
+}
+
+.ask__send {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--text);
+  color: var(--on-text);
+  cursor: pointer;
+  transition: opacity 0.2s var(--ease);
+}
+
+.ask__send svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ask__send:disabled {
+  opacity: 0.18;
+  cursor: default;
+}
+
+.ask__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+
+.ask__chip {
+  padding: var(--s-1) var(--s-3);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.ask__chip:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.ask__answer {
+  margin-top: var(--s-4);
+  padding: var(--s-4) var(--s-5) var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: var(--fs-base);
+  line-height: 1.8;
+  animation: ask-in 0.4s var(--ease);
+}
+
+@keyframes ask-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.ask__question {
+  margin-bottom: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-subtle);
+}
+
+.ask__question::before {
+  content: "Q. ";
+}
+
+.ask__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-sm);
+}
+
+.ask__clear {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--text-subtle);
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}
+
+.ask__clear:hover {
+  color: var(--text);
+}
+
 /* ============================================================
    About
    ============================================================ */
@@ -514,31 +745,69 @@ button {
   transition: transform 0.6s var(--ease);
 }
 
-.project__media-trigger:hover img,
-.project__media-trigger:hover video {
+.project__media-trigger:hover img {
   transform: scale(1.015);
 }
 
-.project__play {
+/* Scrubbable video preview */
+.scrub {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: color-mix(in srgb, #000 55%, transparent);
-  color: #fff;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+  inset: 0;
+  display: block;
+  cursor: ew-resize;
 }
 
-.project__play svg {
-  width: 20px;
-  height: 20px;
-  margin-left: 3px;
+.scrub__hint {
+  position: absolute;
+  left: 50%;
+  bottom: var(--s-4);
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: #fff;
+  background: color-mix(in srgb, #000 55%, transparent);
+  border-radius: var(--radius-full);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+
+.scrub--active .scrub__hint {
+  opacity: 0;
+}
+
+.scrub__hint--touch {
+  display: none;
+}
+
+@media (hover: none) {
+  .scrub__hint--hover {
+    display: none;
+  }
+  .scrub__hint--touch {
+    display: inline;
+  }
+}
+
+.scrub__bar {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: color-mix(in srgb, #fff 25%, transparent);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.scrub--active .scrub__bar {
+  opacity: 1;
+}
+
+.scrub__bar span {
+  display: block;
+  height: 100%;
+  background: #fff;
+  transform-origin: left;
 }
 
 .project__nav {
@@ -910,6 +1179,16 @@ button {
 
 .chat-fab:hover {
   opacity: 0.86;
+}
+
+.chat-fab--hidden {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+.chat-fab {
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
 .chat-fab svg {

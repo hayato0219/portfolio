@@ -29,6 +29,25 @@ export const translations: TranslationsObject = {
     backToTop: "Back to top",
     skipToContent: "Skip to content",
 
+    // Hero prompt
+    askLabel: "Ask Hayato a question",
+    askContinue: "Continue in chat",
+    askClear: "Clear",
+
+    // Project media scrubbing
+    scrubHintHover: "Move across to scrub",
+    scrubHintTouch: "Scroll to scrub",
+
+    // Header status — update statusNow whenever you like
+    statusCity: "Osaka",
+    statusNow: "Working on my master's research",
+
+    // Chat errors
+    chatErrorUnavailable: "Chat is unavailable right now. Please try again later.",
+    chatErrorBusy: "Too many requests. Please wait a moment and try again.",
+    chatErrorGeneric: "Something went wrong. Please try again.",
+    chatErrorNetwork: "Network error. Please check your connection.",
+
     // About content
     aboutDescription: "I'm a graduate student in Informatics at Osaka Metropolitan University. These days I build web apps, making good use of AI along the way. I enjoy trying out new technologies and turning ideas into things that actually work. Outside of coding, I like variety shows (mainly Chidori's programs), anime, manga, and working out.",
 
@@ -111,6 +130,25 @@ export const translations: TranslationsObject = {
     contactLead: "お仕事や研究のご相談など、お気軽にご連絡ください。",
     backToTop: "トップへ戻る",
     skipToContent: "メインコンテンツへ",
+
+    // Hero prompt
+    askLabel: "関に質問する",
+    askContinue: "チャットで続ける",
+    askClear: "クリア",
+
+    // Project media scrubbing
+    scrubHintHover: "左右に動かしてコマ送り",
+    scrubHintTouch: "スクロールでコマ送り",
+
+    // Header status — statusNow は好きなときに書き換えてください
+    statusCity: "大阪",
+    statusNow: "修士研究に取り組み中",
+
+    // Chat errors
+    chatErrorUnavailable: "チャット機能は現在利用できません。少し時間をおいてお試しください。",
+    chatErrorBusy: "リクエストが混み合っています。少し時間をおいてから再度お試しください。",
+    chatErrorGeneric: "エラーが発生しました。もう一度お試しください。",
+    chatErrorNetwork: "ネットワークエラーです。インターネット接続を確認してください。",
 
     // About content
     aboutDescription: "大阪公立大学で情報学を専攻している大学院生です。普段はAIも活用しながらWebアプリを作っています。新しい技術を触って、実際に動くものを形にするのが好きです。コーディング以外では、バラエティ番組（主に千鳥の番組）やアニメ、漫画を見たり、筋トレをするのが好きです。",

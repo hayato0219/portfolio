@@ -6,7 +6,8 @@ import type {
   ExperienceItem as ExperienceItemType,
   ProjectLinkType,
 } from '@/types';
-import { ArrowUpRight, ChevronLeft, ChevronRight, Play } from '../icons';
+import { ArrowUpRight, ChevronLeft, ChevronRight } from '../icons';
+import ScrubVideo from './ScrubVideo';
 
 interface ExperienceItemProps {
   item: ExperienceItemType;
@@ -53,18 +54,12 @@ const ExperienceItem: React.FC<ExperienceItemProps> = ({
             onClick={() => onImageClick(images, currentImageIndex, item.title)}
           >
             {currentIsVideo ? (
-              <>
-                <video
-                  src={mediaPath}
-                  muted
-                  playsInline
-                  preload="metadata"
-                  tabIndex={-1}
-                />
-                <span className="project__play" aria-hidden="true">
-                  <Play />
-                </span>
-              </>
+              <ScrubVideo
+                key={currentName}
+                src={`/images/previews/${currentName}`}
+                hintHover={t.scrubHintHover}
+                hintTouch={t.scrubHintTouch}
+              />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={mediaPath} alt={item.title} loading="lazy" />

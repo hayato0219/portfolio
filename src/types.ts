@@ -76,6 +76,25 @@ export interface Translations {
   contactLead: string;
   backToTop?: string;
   skipToContent: string;
+
+  // Hero prompt
+  askLabel: string;
+  askContinue: string;
+  askClear: string;
+
+  // Project media scrubbing
+  scrubHintHover: string;
+  scrubHintTouch: string;
+
+  // Header status (edit statusNow to whatever you're up to)
+  statusCity: string;
+  statusNow: string;
+
+  // Chat errors
+  chatErrorUnavailable: string;
+  chatErrorBusy: string;
+  chatErrorGeneric: string;
+  chatErrorNetwork: string;
 }
 
 export interface TranslationsObject {
