@@ -1,5 +1,6 @@
 export interface SiteProps {
   name: string;
+  nameJa: string;
   title: string;
   socials: {
     email: string;
