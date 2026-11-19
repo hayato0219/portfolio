@@ -7,16 +7,7 @@ import Chatbot from '@/components/Chatbot';
 import Footer from '@/components/Footer';
 import { translations } from '@/translations';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-import type { SiteProps } from '@/types';
-
-const siteProps: SiteProps = {
-  name: 'Hayato Seki',
-  title: 'Graduate Student Portfolio',
-  socials: {
-    email: '0219ha8ya8to10@gmail.com',
-    gitHub: 'hayato0219',
-  },
-};
+import { siteProps } from '@/siteConfig';
 
 export default function Page() {
   const [language, setLanguage] = useState<'en' | 'ja'>('ja');
@@ -63,7 +54,7 @@ export default function Page() {
         <Home siteProps={siteProps} t={t} />
       </main>
       <Footer {...siteProps.socials} name={siteProps.name} t={t} />
-      <Chatbot t={t} siteProps={siteProps} />
+      <Chatbot t={t} language={language} />
     </>
   );
 }

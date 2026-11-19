@@ -2,19 +2,22 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Markdown from 'markdown-to-jsx';
-import type { Translations, SiteProps } from '@/types';
+import type { Translations } from '@/types';
 
 interface ChatbotProps {
   t: Translations;
-  siteProps: SiteProps;
+  language: 'en' | 'ja';
 }
+
+/** Must match MAX_QUESTION_LENGTH in src/app/api/chat/route.ts. */
+const MAX_QUESTION_LENGTH = 500;
 
 interface Message {
   type: 'user' | 'bot';
   text: string;
 }
 
-const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
+const Chatbot: React.FC<ChatbotProps> = ({ t, language }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
@@ -61,27 +64,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
     inputRef.current?.focus();
   };
 
-  // Build a portfolio context string for the model.
-  const buildSystemPrompt = () => {
-    let context = `Portfolio Information about ${siteProps.name}:\n\n`;
-    context += `About: ${t.aboutDescription}\n\n`;
-    context += `Skills: ${t.skills.join(', ')}\n\n`;
-    context += `Tools: ${t.toolsList.join(', ')}\n\n`;
-    context += `Experience:\n`;
-    t.experienceList.forEach((yearData) => {
-      context += `${yearData.year}:\n`;
-      yearData.items.forEach((item) => {
-        context += `- ${item.title}: ${item.description}\n`;
-        if (item.technologies)
-          context += `  Technologies: ${item.technologies.join(', ')}\n`;
-        if (item.tags) context += `  ${item.tags}\n`;
-      });
-    });
-    context += `\nContact: Email: ${siteProps.socials.email}, GitHub: github.com/${siteProps.socials.gitHub}\n`;
-
-    return `You are ${siteProps.name}. **Always use Markdown (headings, bold, bullet points) to format your response for clarity.** Answer questions about their skills, experience, projects, and background based on the following information. Keep answers concise and friendly. Respond in the same language as the question.\n\n${context}`;
-  };
-
   const errorMessage = (status: number): string => {
     if (status === 503)
       return '⚠️ チャット機能は現在利用できません。少し時間をおいてお試しください。';
@@ -95,7 +77,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ systemPrompt: buildSystemPrompt(), question }),
+        body: JSON.stringify({ question, language }),
       });
 
       if (!res.ok) return errorMessage(res.status);
@@ -189,6 +171,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
               <div className="chat-md">
                 <Markdown
                   options={{
+                    // Model output is untrusted: never turn embedded HTML into DOM.
+                    disableParsingRawHTML: true,
                     overrides: {
                       a: { props: { target: '_blank', rel: 'noopener noreferrer' } },
                     },
@@ -237,6 +221,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ t, siteProps }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
+          maxLength={MAX_QUESTION_LENGTH}
           placeholder={t.chatbotPlaceholder}
           aria-label={t.chatbotPlaceholder}
         />
