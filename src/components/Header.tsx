@@ -119,7 +119,7 @@ const Status: React.FC<{ city: string; now: string }> = ({ city, now }) => {
     <p className="status">
       <span className="status__dot" aria-hidden="true" />
       <span>
-        {city} <time className="status__time">{time ?? '--:--'}</time>
+        {city} <time className="status__time" data-no-morph>{time ?? '--:--'}</time>
       </span>
       <span className="status__sep" aria-hidden="true">
         ·

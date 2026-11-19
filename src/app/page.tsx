@@ -8,12 +8,17 @@ import Footer from '@/components/Footer';
 import { translations } from '@/translations';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useChat } from '@/hooks/useChat';
+import { useLanguageMorph } from '@/hooks/useLanguageMorph';
 import { siteProps } from '@/siteConfig';
 
 export default function Page() {
   const [language, setLanguage] = useState<'en' | 'ja'>('ja');
 
+  const captureForMorph = useLanguageMorph(language);
+
   const changeLanguage = (lang: 'en' | 'ja') => {
+    if (lang === language) return;
+    captureForMorph();
     setLanguage(lang);
     try {
       localStorage.setItem('lang', lang);
