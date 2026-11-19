@@ -78,7 +78,7 @@ export const translations: TranslationsObject = {
         items: [
           {
             title: "StudyOS (personal project)",
-            description: "A personal app for learning English expressions and software engineering a little every day. For English, I record what I wanted to say in Japanese by voice or text, AI suggests natural English for each situation, and I review it with spaced repetition. For software engineering, I answer short written questions from a curriculum of 208 topics across 11 areas such as databases and networking, and AI grades them. It runs from my phone's home screen with a daily reminder.",
+            description: "A personal app for learning English expressions and software engineering a little every day. For English, I record what I wanted to say in Japanese by voice or text, AI suggests natural English for each situation, and I review it with spaced repetition. For software engineering, I answer short written questions from a curriculum of 208 topics across 11 areas such as databases and networking, and AI grades them.",
             date: "Development Period: 2026/09 -",
             technologies: ["TypeScript", "React", "Hono", "Cloudflare Workers", "Gemini API"],
           },
@@ -192,7 +192,7 @@ export const translations: TranslationsObject = {
         items: [
           {
             title: "StudyOS（個人開発）",
-            description: "英語の言い回しとソフトウェアエンジニアリングの知識を、毎日少しずつ学ぶための自分用の学習アプリです。英語は、言いたかった日本語を声やテキストで記録するとAIが場面に合った英語を返し、それを間隔を空けて復習します。ソフトウェアエンジニアリングは、データベースやネットワークなど11分野・208項目のカリキュラムに沿って記述式の問題に答え、AIが採点します。スマホのホーム画面から使えて、毎日リマインダーが届きます。",
+            description: "英語の言い回しとソフトウェアエンジニアリングの知識を、毎日少しずつ学ぶための自分用の学習アプリです。英語は、言いたかった日本語を声やテキストで記録するとAIが場面に合った英語を返し、それを間隔を空けて復習します。ソフトウェアエンジニアリングは、データベースやネットワークなど11分野・208項目のカリキュラムに沿って記述式の問題に答え、AIが採点します。",
             date: "開発期間: 2026/09 -",
             technologies: ["TypeScript", "React", "Hono", "Cloudflare Workers", "Gemini API"],
           },
